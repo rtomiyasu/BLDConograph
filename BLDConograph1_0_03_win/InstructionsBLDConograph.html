@@ -1,0 +1,118 @@
+<html lang="en">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta name="description" content="Distribution of an open-source Bravais lattice determination program."> 
+<meta name="keywords" content="Bravais lattice, crystallography, software, open source, download">
+<style type="text/css">
+   body { line-height: 1.5; }
+</style>
+<head>
+<title> Instructions for BLDConograph </title>
+</head>
+<body lang="en">
+<font size="+1"><b> Instructions for BLDConograph </b></font><br>
+
+<p>
+BLDConograph version 1.0 is a standalone program to execute the Bravais lattice determination <BR>
+by the method introduced in the following reference (<a href="http://sourceforge.jp/projects/conograph/releases/">download page</a> in SourceForge.jp; <a href="sample/sample1(Tetragonal(I);3.84,3.84,20.1,90,90,90)/output/HERMES_Sr327_250K.out.xml">Example of output files</a>). <BR>
+<UL>
+<LI> R. Oishi-Tomiyasu, <BR>
+<i>Rapid Bravais-lattice determination algorithm for lattice constants containing large observation errors</i>, Acta Cryst. A, 68:5 (2012).
+</LI>
+</UL>
+This code is also used in the powder auto-indexing software Conograph.  (<a href="http://research.kek.jp/people/rtomi/ConographGUI/web_page.html">download page</a> of the Conograph GUI version). 
+</p>
+
+<h2>NEWS</h2>
+<dl>
+  <dt>2016/8/6</dt>
+  <dd>
+<ul>
+<li> The output format for base-centered monoclinic cells was corrected.
+</ul>
+  </dd>
+  <dt>2014/2/16</dt>
+  <dd>
+The following bugs were fixed in the newest version.
+(Note that the corresponding part of the above paper is correct.)<br>
+<ul>
+<li> One of the three matrices used for face- and body-centrings was incorrect.  
+<li> In the output file, the value between &ltDistance&gt and &lt/Distance&gt was replaced by its square root.
+     (The former should be called the "norm".)
+<li> The program did not compute the distances (and the norms) properly, 
+     when the input cell and the primitive cell of the output convensional cell
+     are not reduced with regard to the same basis.
+</ul>
+  </dd>
+</dl>
+
+
+<h2>FAQ</h2>
+<ul>
+    <li><a href="#HowtoUse">How to use the BLDConograph program</a></li>
+    <li><a href="#SolutionWasNotFound">When a good solution is not found...</a></li>
+    <li><a href="#HowtoReportBugs">How do I report bugs?</a></li>
+    <li><a href="#Citation">How do I cite BLDConograph?</a></li>
+    <li><a href="#copyright">About the copyright</a></li>
+</ul>
+
+<h3><a name="HowtoUse">How to use the BLDConograph program.</a></h3>
+<ol>
+
+<LI> BLDConograph requires the following two input files (examples can be found in the sample folder):
+    <UL>
+    <LI> A *.inp.xml file that includes information about input parameters (<a href="sample/sample1(Tetragonal(I);3.84,3.84,20.1,90,90,90)/HERMES_Sr327_250K.inp.xml">Example</a>)
+    <LI> A cntl.inp.xml file that includes the names of the *.inp.xml file and the output file (<a href="sample/sample1(Tetragonal(I);3.84,3.84,20.1,90,90,90)/cntl.inp.xml">Example</a>)
+    </UL>
+</LI>
+<LI> Copy one of the folders from the sample folder.
+     Modify the contents of the two xml-files and the name of the *.inp.xml file if necessary.<BR>
+     If you change the name of the *.inp.xml file, then it will be necessary to modify the contents of the cntl.inp.xml file accordingly.
+</LI>
+<LI> Open a command prompt or terminal window in your operating system. <BR>
+     Change the current folder to the folder that contains the modified cntl.inp.xml file.</LI>
+
+<LI> Enter the absolute path to the BLDConograph.exe file on the command line and execute BLDConograph.</LI>
+</ol>
+
+<h3><a name="SolutionWasNotFound">When a good solution is not found...</a></h3>
+<p>
+If you find a case unsolvable by BLDConograph, 
+it is very important information for us, because it may be related to unknown bugs.<BR>
+I appreciate if you kindly send us your input files to the following address.
+<UL>
+<LI> conograph-bugs (at) ml.post.kek.jp </LI>
+</UL>
+</p>
+
+<h3><a name="HowtoReportBugs">How do I report bugs?</a></h3>
+<p>
+You should send us a bug report with 
+<u>all of the input and output files attached (including LOG_BLDCONOGRAPH.txt)</u> to the following e-mail address: 
+<UL>
+<LI> tomiyasu (at) imi.kyushu-u.ac.jp
+</UL>
+</p>
+
+<h3><a name="Citation">How do I cite BLDConograph?</a></h3>
+<p>
+If you use BLDConograph in your research then we strongly encourage you to include a citation of the following article in the bibliography.
+<UL>
+<LI> R. Oishi-Tomiyasu, <BR>
+<i>Rapid Bravais-lattice determination algorithm for lattice constants containing large observation errors</i>, Acta Cryst. A, 68:5 (2012).
+</LI>
+</UL>
+</p>
+
+<h3><a name="copyright">About the copyright</a></h3>
+<p>
+The source codes are distributed as open source under the MIT license on the <a href="http://en.sourceforge.jp/projects/conograph/scm/svn/tree/head">repository list</a> of the Conograph project.
+</p>
+
+<h2><a name="Acknowledgments">Acknowledgments</a></h2>
+<p>
+I would like to express my gratitude to those who offered powder diffraction patterns for the Conograph project.
+</p>
+
+<A HREF="#">[Back to top]</A>
+<A HREF="https://researchmap.jp/rtomiyasu/works?lang=en">[Go to my research page (list of software)]</A>
+</body>
