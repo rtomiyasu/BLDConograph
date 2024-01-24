@@ -1,0 +1,9 @@
+<ZCodeParameters>
+  <BLDConographInputFile>
+    <!-- Control parameters for calculation.-->
+    <ControlParamFile> Acrinol-B-D8CuKa1.inp.xml </ControlParamFile>
+
+    <!-- Output file -->
+    <OutputFile> output/Acrinol-B-D8CuKa1.out.xml </OutputFile>
+  </BLDConographInputFile>
+</ZCodeParameters>

@@ -1,0 +1,9 @@
+<ZCodeParameters>
+  <BLDConographInputFile>
+    <!-- Control parameters for calculation.-->
+    <ControlParamFile>  Alumina676.inp.xml </ControlParamFile>
+
+    <!-- Output file -->
+    <OutputFile> output/Alumina676.out.xml </OutputFile>
+  </BLDConographInputFile>
+</ZCodeParameters>
