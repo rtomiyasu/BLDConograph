@@ -1,5 +1,5 @@
 # Instructions for BLDConograph
-[BLDConograph version 1.0](https://github.com/rtomiyasu/BLDConograph/tree/main/BLDConograph1_0_03_win) is a standalone program to execute the Bravais lattice determination by the method introduced in the following reference (download page in SourceForge.jp; Example of output files).
+[BLDConograph version 1.0](https://github.com/rtomiyasu/BLDConograph/tree/main/BLDConograph1_0_03_win) is a standalone program to execute the Bravais lattice determination by the method introduced in the following reference ([download page]() in GitHub; [Example of output files]()).
 
 This code is also used in the powder auto-indexing software Conograph. (Conograph GUI version).
 
