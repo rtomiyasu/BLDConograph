@@ -4,6 +4,8 @@
 This code is also used in the powder auto-indexing software Conograph. ([Conograph GUI version](https://z-code-software.com/downloads/)).
 
 ## NEWS
+### 2024/1/31
+- The web page of the source codes was moved from OSDN to GitHub.
 ### 2016/8/6
 - The output format for base-centered monoclinic cells was corrected.
 ### 2014/2/16
