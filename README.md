@@ -31,7 +31,7 @@ I appreciate if you kindly send us your input files to the following address.
 ## How do I report bugs?
 You should send us a bug report with all of the input and output files attached (including LOG_BLDCONOGRAPH.txt) to the following e-mail address:
 
-- tomiyasu.ryoko.446@m.kyushu-u.ac.jp
+- tomiyasu (at) imi.kyushu-u.ac.jp
 
 ## How do I cite BLDConograph?
 If you use BLDConograph in your research then we strongly encourage you to include a citation of the following article in the bibliography.
