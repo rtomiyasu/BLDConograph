@@ -12,13 +12,13 @@
           Cubic(P)    0
          Hexagonal    0
       Rhombohedral    0
-     Tetragonal(I)    1    2.0910e-02 :     3.8470e+00    3.8470e+00    2.0080e+01    9.0000e+01    9.0000e+01    9.0000e+01
+     Tetragonal(I)    1   2.0910e-002 :    3.8470e+000   3.8470e+000   2.0080e+001   9.0000e+001   9.0000e+001   9.0000e+001
      Tetragonal(P)    0
-   Orthorhombic(F)    1    2.1303e-02 :     5.4383e+00    5.4427e+00    2.0080e+01    9.0000e+01    9.0000e+01    9.0000e+01
-   Orthorhombic(I)    1    1.3755e-02 :     3.8417e+00    3.8524e+00    2.0080e+01    9.0000e+01    9.0000e+01    9.0000e+01
-   Orthorhombic(C)    2    7.0071e-02 :     3.8524e+00    2.0080e+01    3.7747e+00    9.0000e+01    9.0000e+01    9.0000e+01
+   Orthorhombic(F)    1   2.1303e-002 :    5.4383e+000   5.4427e+000   2.0080e+001   9.0000e+001   9.0000e+001   9.0000e+001
+   Orthorhombic(I)    1   1.3755e-002 :    3.8417e+000   3.8524e+000   2.0080e+001   9.0000e+001   9.0000e+001   9.0000e+001
+   Orthorhombic(C)    2   7.0071e-002 :    3.8524e+000   2.0080e+001   3.7747e+000   9.0000e+001   9.0000e+001   9.0000e+001
    Orthorhombic(P)    0
-     Monoclinic(C)    5    1.1551e-02 :     2.0428e+01    3.8417e+00    3.8524e+00    9.0000e+01    1.0060e+02    9.0000e+01
+     Monoclinic(C)    5   1.1551e-002 :    2.0428e+001   3.8417e+000   3.8524e+000   9.0000e+001   1.0060e+002   9.0000e+001
      Monoclinic(P)    0
 
   -->
@@ -50,8 +50,8 @@
    <CrystalSystem>    Tetragonal(I) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    3.8470e+00    3.8470e+00    2.0080e+01    9.0000e+01    9.0000e+01    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    2.0910e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   3.8470e+000   3.8470e+000   2.0080e+001   9.0000e+001   9.0000e+001   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   2.0910e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
 
@@ -66,8 +66,8 @@
    <CrystalSystem>  Orthorhombic(F) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    5.4383e+00    5.4427e+00    2.0080e+01    9.0000e+01    9.0000e+01    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    2.1303e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   5.4383e+000   5.4427e+000   2.0080e+001   9.0000e+001   9.0000e+001   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   2.1303e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
 
@@ -78,8 +78,8 @@
    <CrystalSystem>  Orthorhombic(I) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    3.8417e+00    3.8524e+00    2.0080e+01    9.0000e+01    9.0000e+01    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    1.3755e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   3.8417e+000   3.8524e+000   2.0080e+001   9.0000e+001   9.0000e+001   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   1.3755e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
 
@@ -90,16 +90,16 @@
    <CrystalSystem>  Orthorhombic(C) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    3.8524e+00    2.0080e+01    3.7747e+00    9.0000e+01    9.0000e+01    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    7.0071e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   3.8524e+000   2.0080e+001   3.7747e+000   9.0000e+001   9.0000e+001   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   7.0071e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
   <UnitCellCandidate number="0503">
    <CrystalSystem>  Orthorhombic(C) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    3.8417e+00    2.0080e+01    3.7867e+00    9.0000e+01    9.0000e+01    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    1.1333e-01 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   3.8417e+000   2.0080e+001   3.7867e+000   9.0000e+001   9.0000e+001   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   1.1333e-001 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
 
@@ -114,40 +114,40 @@
    <CrystalSystem>    Monoclinic(C) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    2.0428e+01    3.8417e+00    3.8524e+00    9.0000e+01    1.0060e+02    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    1.1551e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   2.0428e+001   3.8417e+000   3.8524e+000   9.0000e+001   1.0060e+002   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   1.1551e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
   <UnitCellCandidate number="0306">
    <CrystalSystem>    Monoclinic(C) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    2.0436e+01    3.8524e+00    3.8417e+00    9.0000e+01    1.0072e+02    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    1.3167e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   2.0436e+001   3.8524e+000   3.8417e+000   9.0000e+001   1.0072e+002   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   1.3167e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
   <UnitCellCandidate number="0306">
    <CrystalSystem>    Monoclinic(C) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    5.4383e+00    2.0080e+01    3.8417e+00    9.0000e+01    1.3490e+02    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    1.4997e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   5.4383e+000   2.0080e+001   3.8417e+000   9.0000e+001   1.3490e+002   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   1.4997e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
   <UnitCellCandidate number="0306">
    <CrystalSystem>    Monoclinic(C) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    5.4427e+00    5.4383e+00    1.0397e+01    9.0000e+01    1.0507e+02    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    2.0631e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   5.4427e+000   5.4383e+000   1.0397e+001   9.0000e+001   1.0507e+002   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   2.0631e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
   <UnitCellCandidate number="0306">
    <CrystalSystem>    Monoclinic(C) </CrystalSystem>
 
    <!-- a, b, c(angstrom), alpha, beta, gamma(deg.)-->
-   <UnitCellParameters>    5.4384e+00    5.4427e+00    1.0389e+01    9.0000e+01    1.0490e+02    9.0000e+01 </UnitCellParameters>
-   <DistanceFromInputUnitCell>    2.0993e-02 </DistanceFromInputUnitCell>
+   <UnitCellParameters>   5.4384e+000   5.4427e+000   1.0389e+001   9.0000e+001   1.0490e+002   9.0000e+001 </UnitCellParameters>
+   <DistanceFromInputUnitCell>   2.0993e-002 </DistanceFromInputUnitCell>
   </UnitCellCandidate>
 
 
