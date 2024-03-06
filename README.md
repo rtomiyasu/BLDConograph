@@ -5,7 +5,7 @@ This code is also used in the powder auto-indexing software Conograph. ([Conogra
 
 ## NEWS
 ### 2024/3/6
-- The program code of Python was added.
+- The program code of Python was newly added.
 ### 2024/1/31
 - The web page of the source codes was moved from OSDN to GitHub.
 ### 2016/8/6
