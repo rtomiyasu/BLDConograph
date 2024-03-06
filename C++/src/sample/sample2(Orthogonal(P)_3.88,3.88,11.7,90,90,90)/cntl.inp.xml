@@ -1,0 +1,10 @@
+<ZCodeParameters>
+ <BLDConographInputFile>
+  <!-- Input parameters.-->
+  <ControlParamFile> 1339prbasrcuo_bs1.inp.xml </ControlParamFile>
+
+  <!-- Output file -->
+  <OutputFile> output/1339prbasrcuo_bs1.out.xml </OutputFile>
+ </BLDConographInputFile>
+</ZCodeParameters>
+ 

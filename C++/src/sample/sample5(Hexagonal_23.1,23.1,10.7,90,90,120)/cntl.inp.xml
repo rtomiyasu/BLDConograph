@@ -1,0 +1,9 @@
+<ZCodeParameters>
+  <BLDConographInputFile>
+    <!-- Input parameters.-->
+    <ControlParamFile> M402-pf-119673.inp.xml </ControlParamFile>
+
+    <!-- Output file -->
+    <OutputFile> output/M402-pf-119673.out.xml </OutputFile>
+  </BLDConographInputFile>
+</ZCodeParameters>

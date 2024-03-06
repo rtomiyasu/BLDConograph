@@ -1,9 +1,0 @@
-<ZCodeParameters>
-  <BLDConographInputFile>
-    <!-- Input parameters.-->
-    <ControlParamFile> sample3.inp.xml </ControlParamFile>
-
-    <!-- Output file -->
-    <OutputFile> output/sample3.out.xml </OutputFile>
-  </BLDConographInputFile>
-</ZCodeParameters>

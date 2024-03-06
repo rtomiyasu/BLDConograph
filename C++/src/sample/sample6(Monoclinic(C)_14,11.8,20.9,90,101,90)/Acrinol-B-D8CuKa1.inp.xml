@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ZCodeParameters>
+  <BLDConographParameters>
+	<LatticeParameter>
+	<!-- Parameters are not necessary to be Niggli-reduced. -->
+     	<a>   9.1568e+000 </a>
+     	<b>   9.1712e+000 </b>
+     	<c>   2.0946e+001 </c>
+     	<alpha>   8.1634e+001 </alpha>
+     	<beta>    8.1751e+001 </beta>
+     	<gamma>   8.0086e+001 </gamma>
+	</LatticeParameter>
+
+	<Resolution>
+	<!-- This parameter is used to judge if a lattice and another lattice with higher symmetry
+		are equivalent or not.
+	    For Delone reduced metric tensors (sij) and (tij) of two reciprocal lattices,
+	 	two lattices are judged to be equivalent if the following relative differences are smaller than this parameter, 
+	 	1. | sii - tii | / max{sii, tii}. 
+	 	2. | (sii + sjj - sij * 2) - (tii + tjj - tij * 2) | / max{sii + sjj - sij * 2, tii + tjj - tij * 2}.
+ 	-->
+		0.1
+	</Resolution>
+
+	<DoesPrudentSymmetrySearch>
+  	<!-- 0:quick search, 1:prudent search) -->
+	 0
+    </DoesPrudentSymmetrySearch>
+
+  	<!-- Bravais types to execute Bravais lattice determination (0:No, 1:Yes) -->
+	<OutputTriclinic> 1 </OutputTriclinic>
+	<OutputMonoclinicP> 1 </OutputMonoclinicP>
+	<OutputMonoclinicB> 1 </OutputMonoclinicB>
+	<OutputOrthorhombicP> 1 </OutputOrthorhombicP>
+	<OutputOrthorhombicB> 1 </OutputOrthorhombicB>
+	<OutputOrthorhombicI> 1 </OutputOrthorhombicI>
+	<OutputOrthorhombicF> 1 </OutputOrthorhombicF>
+	<OutputTetragonalP> 1 </OutputTetragonalP>
+	<OutputTetragonalI> 1 </OutputTetragonalI>
+	<OutputRhombohedral> 1 </OutputRhombohedral>
+	<OutputHexagonal> 1 </OutputHexagonal>
+	<OutputCubicP> 1 </OutputCubicP>
+	<OutputCubicI> 1 </OutputCubicI>
+	<OutputCubicF> 1 </OutputCubicF>
+
+	<AxisForRhombohedralSymmetry> <!-- "Rhombohedral" or "Hexagonal" -->
+		Hexagonal
+	</AxisForRhombohedralSymmetry>
+	<AxisForBaseCenteredSymmetry> <!-- "A", "B", or "C" -->
+		B
+	</AxisForBaseCenteredSymmetry>
+  </BLDConographParameters>
+</ZCodeParameters>
+  
