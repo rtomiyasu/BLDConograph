@@ -462,14 +462,15 @@ if __name__ == '__main__':
     print ("* Input S:")
     print (S_input)
 
-    bc = BravaisLatticeDetermination ()
+    # Set input parameters.
     bc_input = BravaisLatticeDetermination.InputType()
-    
     bc_input.Sobs = S_input
     bc_input.eps  = 0.2
     bc_input.DoesPrudentSearch = False
     bc_input.AxisForBaseCenteredSymmetry = 'A'
     bc_input.AxisForRhombohedralSymmetry = 'Hexagonal'
     
+    # Run the Bravais lattice determination.
+    bc = BravaisLatticeDetermination ()
     bc.set_bravais_class (bc_input)
     print( bc.result.toText(bc_input) )

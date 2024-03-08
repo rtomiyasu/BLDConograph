@@ -16,7 +16,7 @@ def make_dir_list (root = 'sample', fname = 'input.py'):
             dirList.append (dir)
     return dirList
 
-def putSobs (latticeParameters):
+def lattice2sym (latticeParameters):
     """ Convert unit-cell parameters to the symmetric matrix:
     [a^2, a*b*cos(gamma), a*c*cos(beta)],
     [a*b*cos(gamma), b^2, b*c*cos(alpha)],
@@ -48,55 +48,38 @@ def read_input (dir):
     # Read input.py.
     import input
     importlib.reload (input)
+    
     # Read the input parameters.
-    out =  (
-            input.sampleName,
-            input.latticeParameters,
-            input.doesPrudentSymmetrySearch,
-            input.axisForRhombohedralSymmetry,
-            input.axisForBaseCenteredSymmetry,
-            input.epsilon
-                                            )
-    sys.path.remove (dir) # Remove the path to dir.
-    return out
-
-def ProcessBLD (Sobs, doesPrudent ,axisRhombohedral, axisBaseCenter ,eps):
-    """execute prcess to produce projection candidates of
-    each 14 bravais lattice pattern from lattice parameter.
-    input :
-        Sobs : symmetry matrix converted from lattice param
-                [a,b,c,alpha,beta,gamma]
-        doesPrudent : flg of prudent search
-        axisHRHombohedral : axis for lattice pattern of Rhombohedral
-                            ('Rhombohedral or 'Hexagonal)
-        eps : threshold to select candidate
-    output:
-        dict data {lattice pattern name : [(g, S), (g, S),....], ....}
-        g : conversion matrix, S : projection"""
-    bc = BravaisLatticeDetermination ()
     bc_input = BravaisLatticeDetermination.InputType()
-    bc_input.Sobs = Sobs
-    bc_input.DoesPrudentSearch = doesPrudent
-    bc_input.eps  = eps
-    bc_input.AxisForRhombohedralSymmetry = axisRhombohedral
-    bc_input.AxisForBaseCenteredSymmetry = axisBaseCenter
-    bc.set_bravais_class (bc_input)
-    return bc.result.BravaisClasses
+    bc_input.Sobs = lattice2sym(input.latticeParameters) # Unit-cell parameters --> symmetric matrix Sobs
+    bc_input.doesPrudentSearch   = input.doesPrudentSymmetrySearch
+    bc_input.axisForRhombohedralSymmetry = input.axisForRhombohedralSymmetry
+    bc_input.axisForBaseCenteredSymmetry = input.axisForBaseCenteredSymmetry
+    bc_input.epsilon = input.epsilon
+    
+    sys.path.remove (dir) # Remove the path to dir.
+    return (input.latticeParameters, bc_input)
+
 
 #-------------------------------------------------------
 #      Post process & make output file
 #-------------------------------------------------------
-def selectMatrixMinDist (name, bDict):
-    """select projection by minimum dist value between projection & gSobstg"""
-    dists = np.array ([d for _, _, d in bDict[name]])
-    mats = [S for _, S, _ in bDict[name]]
-    minIdx = np.argmin (dists)
-    mat = mats [minIdx]
-    return mat, dists[minIdx], len (mats)
-    
+def putBravaisCandidateMinDistance (bDict):
+    """put lattice parameters with the minimal distance from the input parameters """
+    bcDict = {}
+    for name in bDict.keys():
+        bcDict[name] = {}
+        # if no candidate, set NumberOfSolution 0 and continue
+        if len (bDict[name]) == 0:
+            bcDict[name]['NumberOfCandidates'] = 0
+            continue
+        bcDict[name]['NumberOfCandidates'] = len(bDict[name])
+        bcDict[name]['DistanceFromInputUnitCell'] = bDict[name][0][2]
+        bcDict[name]['UnitCellParameter'] = sym2lattice (bDict[name][0][1])
+    return bcDict
+
 def putBravaisCandidates (bDict):
-    """
-    set projection matices and values of distance to dict data format
+    """ put lattice parameters  projection matices and values of distance to dict data format
     output : 
     {lattice pattern name : 
                     'UnitCellParameters' : [
@@ -115,44 +98,24 @@ def putBravaisCandidates (bDict):
             d for _, _, d in bDict[name]]
     return bcDict        
 
-def putBravaisCandidateMinDistance (bDict):
-    """put lattice parameters of min dist form candidates"""
-    bcDict = {}
-    for name in bDict.keys():
-        bcDict[name] = {}
-        # if no candidate, set NumberOfSolution 0 and continue
-        if len (bDict[name]) == 0:
-            bcDict[name]['NumberOfSolutions'] = 0
-            continue
 
-        # mat : projection, d : dist, length : num of candidates
-        mat, d, length = selectMatrixMinDist (name, bDict)
-        
-        bcDict[name]['NumberOfSolutions'] = length
-        bcDict[name]['DistanceFromUnitCell'] = d
-        bcDict[name]['UnitCellParameter'] = sym2lattice (mat)
-    return bcDict
-
-def make_ouput_dict (sampleName, bDict):
+def make_ouput_dict (bDict):
     """make output of dict format"""
     candidateMinDist = putBravaisCandidateMinDistance (bDict)
     candidates = putBravaisCandidates (bDict)
-
     outputDict ={
-        'SampleName' : sampleName,        
-        'BravaisLatticeMinDistance' : candidateMinDist,
-        'BravaisCandidates' : candidates
+        'CandidatesWithMinimalDistance' : candidateMinDist,
+        'AllCandidates' : candidates
                                                         }
-    
     return outputDict    
 
 def write_lattice_min_dist (f, outputDict):
-    maxLen = max ([len (name) for name in outputDict['BravaisLatticeMinDistance']])
-    for name, valuesDict in outputDict['BravaisLatticeMinDistance'].items():
-        n = valuesDict['NumberOfSolutions']
+    maxLen = max ([len (name) for name in outputDict['CandidatesWithMinimalDistance']])
+    for name, valuesDict in outputDict['CandidatesWithMinimalDistance'].items():
+        n = valuesDict['NumberOfCandidates']
         text = [' ' * (maxLen - len (name)) + name, str (n)]
         if n > 0:
-            d = valuesDict ['DistanceFromUnitCell']
+            d = valuesDict ['DistanceFromInputUnitCell']
             lattice = valuesDict ['UnitCellParameter']
             text += ['{:.4e}'.format (lt) for lt in lattice]
             text += ['{:.4e}'.format (d)]    
@@ -160,9 +123,9 @@ def write_lattice_min_dist (f, outputDict):
         f.write (text)
 
 def write_lattice_candidates (f, outputDict):
-    text = 'BravaisCandidates = {\n'
-    for name, valuesDict in outputDict['BravaisCandidates'].items():
-        text += '\t' + '# a, b, c, alpha, beta, gamma, dist\n'
+    text = 'AllCandidates = {\n'
+    for name, valuesDict in outputDict['AllCandidates'].items():
+        text += '\t' + '# a, b, c, alpha, beta, gamma, Distance from the input unit cell\n'
         text += '\t' + "'" + name + "'" + ' : [\n'
 
         if 'UnitCellParameters' in valuesDict:
@@ -184,25 +147,20 @@ def renewalBravaisTypeName (outputDict, axis):
     """rename lattice pattern name of output dict
        ex base-centered monoclinic --> Monoclinic (C)
        axis : axisBaseCenter = A, B or C"""
-    outputDict['BravaisLatticeMinDistance'] = {
-        BravaisLatticeDetermination.key2str (k, axis) : v for k, v in outputDict['BravaisLatticeMinDistance'].items()}
-    outputDict['BravaisCandidates'] = {
-        BravaisLatticeDetermination.key2str (k, axis) : v for k , v in outputDict['BravaisCandidates'].items()}
+    outputDict['CandidatesWithMinimalDistance'] = {
+        BravaisLatticeDetermination.key2str (k, axis) : v for k, v in outputDict['CandidatesWithMinimalDistance'].items()}
+    outputDict['AllCandidates'] = {
+        BravaisLatticeDetermination.key2str (k, axis) : v for k , v in outputDict['AllCandidates'].items()}
     return outputDict
 
 def output_to_py_file (outputDict, dir, axisBaseCenter):
     # make summary document file of BLD Conograph
     # & output to py file
     outputDict = renewalBravaisTypeName (outputDict, axisBaseCenter)
-    savePath = os.path.join (dir, 'output', outputDict['SampleName'] + '.out.py')
-    comment = '# Result is divided 2 parts of BravaisLatticeMinDistance & BravaisCandidates.\n'
-    comment += '# BravaisLatticeMinDistance : Selected Bravais lattice parameters of Minimum distance\n'
-    comment +='# BravaisCandidates : Lists of all candidates of lattice parameters\n'
+    savePath = os.path.join (dir, 'output', 'output.py')
     with open (savePath, 'w', encoding='utf-8') as f:
-        f.write ('sampleName = ' + "'" + outputDict['SampleName'] + "'" + '\n')
-        f.write (comment)
-        f.write ("'''\n<<Lattice Parameters Minimum Distance>>\n")
-        f.write ('PatternName numCandidate, a b, c, alpha, beta, gamma, dist\n')
+        f.write ("''' << Unit-cell Parameters with the Minimal Distance >>\n")
+        f.write ('Bravais type, Number of candidates, a b, c, alpha, beta, gamma, Distance from the input unit cell\n')
 
         # lattice parameters min distance
         write_lattice_min_dist (f, outputDict)        
@@ -213,7 +171,7 @@ def output_to_py_file (outputDict, dir, axisBaseCenter):
 #------------------------------------------------------
 #    main
 #------------------------------------------------------
-def process_BLDConograph (dirList = None):
+def test_samples (dirList = None):
     # If dirList = None, all the 'input.py' files in 'sample' are searched for and processed.
     if dirList is None:
         dirList = make_dir_list ('sample')
@@ -225,38 +183,32 @@ def process_BLDConograph (dirList = None):
             print ('There is not input.py in {}...'.format(dir))
             continue
         
-        sampleName, latticeParams, \
-        doesPrudent, axisRhom, axisBaseCenter, eps = read_input (dir)
-        if not isinstance (doesPrudent, bool):
-            doesPrudent = bool (doesPrudent)
+        # Read input parameters.
+        latticeParams, bc_input = read_input (dir) 
+        if not isinstance (bc_input.doesPrudentSearch, bool):
+            bc_input.doesPrudentSearch = bool (bc_input.doesPrudentSearch)
 
-        # print logs
-        print ('-----folder name {} sample name : {}-----'.format (dir, sampleName))
-        print ('Parameters doesPrudent : {}, axis rhombohedral sym : {}, axis base center : {}'.format(
-            int (doesPrudent), axisRhom, axisBaseCenter))
-        print ('<<lattice params a, b, c, alpha, beta, gamma>>')
+        print ('-----folder name: {} -----'.format (dir))
+        print ('<< Input parameters of primitive unit-cells: a, b, c, alpha, beta, gamma >>')
         print ('  '.join (['{:.4e}'.format(v) for v in list (latticeParams)]))
 
         # Make a folder 'output' in dir. Nothing is done if it exists.
-        os.makedirs (os.path.join (dir, 'output'), 
-                    exist_ok = True)
+        os.makedirs (os.path.join (dir, 'output'), exist_ok = True)
 
-        # Unit-cell parameters --> symmetric matrix Sobs
-        Sobs = putSobs (latticeParams)
         try:
             # Bravais Lattice Determination
-            bDict = ProcessBLD (Sobs, doesPrudent,
-                        axisRhom, axisBaseCenter, eps)
+            bc = BravaisLatticeDetermination ()
+            bc.set_bravais_class (bc_input)
         except AssertionError as e:
             print (e)
             continue
 
         # build the dict data for output file
-        outputDict = make_ouput_dict (sampleName, bDict)
+        outputDict = make_ouput_dict (bc.result.BravaisClasses)
 
         # save the result to py file with renewal bravais type name
-        output_to_py_file (outputDict, dir, axisBaseCenter)
-        print ('completed the BLD process : {} ....\n'.format(dir))
+        output_to_py_file (outputDict, dir, bc_input.axisForBaseCenteredSymmetry)
+        print ('completed all: {} ....\n'.format(dir))
 
 if __name__ == '__main__':
-    process_BLDConograph ()
+    test_samples ()
