@@ -87,7 +87,7 @@ class BravaisLatticeDetermination:
     class InputType:
         def __init__ (self,):
             self.Sobs = np.identity(3, dtype="float")
-            self.eps = 0.2
+            self.epsilon = 0.2
             self.DoesPrudentSearch = True
             self.AxisForBaseCenteredSymmetry = 'B'
             self.AxisForRhombohedralSymmetry = 'Hexagonal'
@@ -122,12 +122,13 @@ class BravaisLatticeDetermination:
                     text += '\n'
             return text
         
-        def toDictionary(self):
+        def toDictionary(self, Input):
             ans = {}
-            for name, list_btype in self.BravaisClasses.items():               
-                ans[name] = list()
+            for name, list_btype in self.BravaisClasses.items():     
+                bname = BravaisLatticeDetermination.key2str(name, Input.AxisForBaseCenteredSymmetry)
+                ans[bname] = list()
                 for entries in list_btype:
-                    ans[name].append( { 'BasisChangeMatrix' : entries[0],
+                    ans[bname].append( { 'BasisChangeMatrix' : entries[0],
                                                'GramMatrix' : entries[1],
                                         'DistanceFromInput' : entries[2] } )
             return ans
@@ -400,7 +401,7 @@ class BravaisLatticeDetermination:
         #    ans_cF (Face-centered Cubic)
         #--------------------------------------------
         Sobs = Input.Sobs
-        eps  = Input.eps
+        eps  = Input.epsilon
         doesPrudentSearch = Input.DoesPrudentSearch
         AxisForBaseCenteredSymmetry = Input.AxisForBaseCenteredSymmetry
         AxisForRhombohedralSymmetry = Input.AxisForRhombohedralSymmetry

@@ -64,7 +64,7 @@ def read_input (dir):
 #-------------------------------------------------------
 #      Post process & make output file
 #-------------------------------------------------------
-def output_file (bDict, dir, axisBaseCenter):
+def output_file (bDict, dir):
     # Output the results in bDict.
     savePath = os.path.join (dir, 'output', 'output.py')
     with open (savePath, 'w', encoding='utf-8') as f:
@@ -72,11 +72,10 @@ def output_file (bDict, dir, axisBaseCenter):
         f.write ('Bravais_type, Number_of_candidates, a b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell\n')
         
         ''' Unit-cell parameters with the minimal distances from the input unit cell.'''
-        maxLen = max ([len (BravaisLatticeDetermination.key2str(name, axisBaseCenter)) for name in bDict])
+        maxLen = max ([len (name) for name in bDict])
         for name in bDict.keys():
             n = len(bDict[name])
-            bname = BravaisLatticeDetermination.key2str(name, axisBaseCenter)
-            text = [' ' * (maxLen - len (bname)) + bname, str (n)]
+            text = [' ' * (maxLen - len (name)) + name, str (n)]
             if n > 0:
                 lattice = sym2lattice( bDict[name][0]['GramMatrix'] )
                 d = bDict[name][0]['DistanceFromInput']
@@ -90,7 +89,7 @@ def output_file (bDict, dir, axisBaseCenter):
         text = 'AllCandidates = {\n'
         for i, name in enumerate (bDict.keys()):
             text += '\t' + '# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell\n'
-            text += '\t' + "'" + BravaisLatticeDetermination.key2str(name, axisBaseCenter) + "'" + ' : [\n'
+            text += '\t' + "'" + name + "'" + ' : [\n'
             for j in range(len(bDict[name])):
                 lattice = sym2lattice( bDict[name][j]['GramMatrix'] )
                 d = bDict[name][j]['DistanceFromInput']
@@ -141,8 +140,8 @@ def test_samples (dirList = None):
             print (e)
             continue
 
-        # save the result to py file with renewal bravais type name
-        output_file (bc.result.toDictionary(), dir, bc_input.axisForBaseCenteredSymmetry)
+        # Save the result in output.py.
+        output_file (bc.result.toDictionary(bc_input), dir)
         print ('completed all: {} ....\n'.format(dir))
 
 if __name__ == '__main__':

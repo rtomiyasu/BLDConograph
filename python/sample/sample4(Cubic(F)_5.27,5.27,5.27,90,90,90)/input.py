@@ -5,7 +5,7 @@ latticeParameters = [3.7250e+000, 3.7269e+000, 3.7286e+000, 9.0100e+001, 1.1996e
 
 # This parameter is used to judge if two unit-cell parameters are equivalent or not, by checking if 
 # their corresponding metric tensors (sij) and (tij) have a relative difference that satisfies |sij-tij| <= epsilon*max{sij, tij}.
-epsilon = 0.2
+epsilon = 0.1
 
 # 0: quick search, 1: exhaustive search
 doesPrudentSymmetrySearch = 1
