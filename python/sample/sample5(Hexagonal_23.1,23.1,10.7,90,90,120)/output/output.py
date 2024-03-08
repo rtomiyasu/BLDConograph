@@ -1,5 +1,5 @@
 ''' << Unit-cell Parameters with the Minimal Distance >>
-Bravais type, Number of candidates, a b, c, alpha, beta, gamma, Distance from the input unit cell
+Bravais_type, Number_of_candidates, a b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
       Triclinic  1  1.0654e+01  2.2895e+01  2.3003e+01  6.0600e+01  8.9377e+01  8.9119e+01  0.0000e+00
   Monoclinic(P)  1  2.2895e+01  1.0654e+01  2.3003e+01  9.0000e+01  1.1940e+02  9.0000e+01  6.5065e+00
   Monoclinic(C)  14  3.9628e+01  2.3157e+01  1.0654e+01  9.0000e+01  9.0871e+01  9.0000e+01  7.1764e+00
@@ -16,15 +16,15 @@ Orthorhombic(F)  0
        Cubic(F)  0
 '''
 AllCandidates = {
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Triclinic' : [
 		'1.0654e+01  2.2895e+01  2.3003e+01  6.0600e+01  8.9377e+01  8.9119e+01  0.0000e+00'
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Monoclinic(P)' : [
 		'2.2895e+01  1.0654e+01  2.3003e+01  9.0000e+01  1.1940e+02  9.0000e+01  6.5065e+00'
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Monoclinic(C)' : [
 		'3.9628e+01  2.3157e+01  1.0654e+01  9.0000e+01  9.0871e+01  9.0000e+01  7.1764e+00',
 		'2.2895e+01  4.0082e+01  1.0654e+01  9.0000e+01  9.0881e+01  9.0000e+01  1.0298e+01',
@@ -41,10 +41,10 @@ AllCandidates = {
 		'2.3157e+01  4.4708e+01  1.0654e+01  9.0000e+01  9.0252e+01  9.0000e+01  3.1214e+02',
 		'2.3003e+01  4.5016e+01  1.0654e+01  9.0000e+01  9.0623e+01  9.0000e+01  3.1517e+02'
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Orthorhombic(P)' : [
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Orthorhombic(C)' : [
 		'2.3157e+01  3.9628e+01  1.0654e+01  9.0000e+01  9.0000e+01  9.0000e+01  1.1568e+01',
 		'2.3157e+01  3.9628e+01  1.0654e+01  9.0000e+01  9.0000e+01  9.0000e+01  1.1568e+01',
@@ -61,20 +61,20 @@ AllCandidates = {
 		'2.3157e+01  4.4708e+01  1.0654e+01  9.0000e+01  9.0000e+01  9.0000e+01  3.1214e+02',
 		'2.3003e+01  4.5016e+01  1.0654e+01  9.0000e+01  9.0000e+01  9.0000e+01  3.1519e+02'
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Orthorhombic(I)' : [
 		'1.0654e+01  2.3157e+01  4.0879e+01  9.0000e+01  9.0000e+01  9.0000e+01  1.5170e+02'
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Orthorhombic(F)' : [
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Tetragonal(P)' : [
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Tetragonal(I)' : [
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Rhombohedral' : [
 		'4.0715e+01  4.0715e+01  1.0654e+01  9.0000e+01  9.0000e+01  1.2000e+02  2.3108e+02',
 		'2.0656e+01  2.0656e+01  6.1578e+01  9.0000e+01  9.0000e+01  1.2000e+02  5.8157e+02',
@@ -84,17 +84,17 @@ AllCandidates = {
 		'2.0656e+01  2.0656e+01  6.4514e+01  9.0000e+01  9.0000e+01  1.2000e+02  6.7895e+02',
 		'2.0558e+01  2.0558e+01  6.2218e+01  9.0000e+01  9.0000e+01  1.2000e+02  6.9184e+02'
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Hexagonal' : [
 		'2.3157e+01  2.3157e+01  1.0654e+01  9.0000e+01  9.0000e+01  1.2000e+02  2.0549e+01'
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Cubic(P)' : [
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Cubic(I)' : [
 	],
-	# a, b, c, alpha, beta, gamma, Distance from the input unit cell
+	# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell
 	'Cubic(F)' : [
-	],
+	]
 }

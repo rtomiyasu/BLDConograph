@@ -103,7 +103,7 @@ class BravaisLatticeDetermination:
                 self.BravaisClasses[name] = list()
     
         #----------------------------------------------
-        #   Print out functions
+        #   Output functions
         #----------------------------------------------
         def toText(self, Input):
             text = ''
@@ -121,6 +121,17 @@ class BravaisLatticeDetermination:
                         text += '\n'
                     text += '\n'
             return text
+        
+        def toDictionary(self):
+            ans = {}
+            for name, list_btype in self.BravaisClasses.items():               
+                ans[name] = list()
+                for entries in list_btype:
+                    ans[name].append( { 'BasisChangeMatrix' : entries[0],
+                                               'GramMatrix' : entries[1],
+                                        'DistanceFromInput' : entries[2] } )
+            return ans
+
     
     
     @classmethod
@@ -388,7 +399,6 @@ class BravaisLatticeDetermination:
         #    ans_cI (Body-centered Cubic)
         #    ans_cF (Face-centered Cubic)
         #--------------------------------------------
-        
         Sobs = Input.Sobs
         eps  = Input.eps
         doesPrudentSearch = Input.DoesPrudentSearch

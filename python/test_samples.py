@@ -64,108 +64,47 @@ def read_input (dir):
 #-------------------------------------------------------
 #      Post process & make output file
 #-------------------------------------------------------
-def putBravaisCandidateMinDistance (bDict):
-    """put lattice parameters with the minimal distance from the input parameters """
-    bcDict = {}
-    for name in bDict.keys():
-        bcDict[name] = {}
-        # if no candidate, set NumberOfSolution 0 and continue
-        if len (bDict[name]) == 0:
-            bcDict[name]['NumberOfCandidates'] = 0
-            continue
-        bcDict[name]['NumberOfCandidates'] = len(bDict[name])
-        bcDict[name]['DistanceFromInputUnitCell'] = bDict[name][0][2]
-        bcDict[name]['UnitCellParameter'] = sym2lattice (bDict[name][0][1])
-    return bcDict
-
-def putBravaisCandidates (bDict):
-    """ put lattice parameters  projection matices and values of distance to dict data format
-    output : 
-    {lattice pattern name : 
-                    'UnitCellParameters' : [
-                            [a,b,c,α,β,γ], [a,b,c,α,β,γ],...],
-                    'DIstanceFromUnitInputUnitCell' : [
-                            d0, d1, d2...]
-    ・・・・}"""
-    bcDict = {}
-    for name in bDict.keys():
-        bcDict[name] = {}
-        if len (bDict[name]) == 0:
-            continue
-        bcDict[name]['UnitCellParameters'] = [
-            sym2lattice (S) for _, S, _ in bDict[name]]
-        bcDict[name]['DistanceFromInputUnitCell'] = [
-            d for _, _, d in bDict[name]]
-    return bcDict        
-
-def write_lattice_min_dist (f, bDict):
-    '''write bravas candidates pair (lattice parameter & distance)
-    of minnimum distance of each bravais patterns'''
-    # select pairs (lattice param & distance) of min distance
-    bcDict = putBravaisCandidateMinDistance (bDict)
-
-    maxLen = max ([len (name) for name in bcDict])
-    for name, valuesDict in bcDict.items():
-        n = valuesDict['NumberOfCandidates']
-        text = [' ' * (maxLen - len (name)) + name, str (n)]
-        if n > 0:
-            d = valuesDict ['DistanceFromInputUnitCell']
-            lattice = valuesDict ['UnitCellParameter']
-            text += ['{:.4e}'.format (lt) for lt in lattice]
-            text += ['{:.4e}'.format (d)]    
-        text = '  '.join (text) + '\n'
-        f.write (text)
-
-def write_lattice_candidates (f, bDict):
-    '''write all bravais candidates'''
-    #prepare the projection matrixces & distance pair of all bravais candidates
-    #   for output to file.
-    bcDict = putBravaisCandidates (bDict)
-    text = 'AllCandidates = {\n'
-    for i, (name, valuesDict) in enumerate (bcDict.items()):
-        text += '\t' + '# a, b, c, alpha, beta, gamma, Distance from the input unit cell\n'
-        text += '\t' + "'" + name + "'" + ' : [\n'
-
-        if 'UnitCellParameters' in valuesDict:
-            for j, (lattice, d) in enumerate (zip (
-                                valuesDict['UnitCellParameters'],
-                                valuesDict['DistanceFromInputUnitCell'])):
-                text += '\t' * 2
-                text += "'" + '  '.join (['{:.4e}'.format(lt) for lt in (lattice + [d])]) + "'"
-                
-                if j < len (valuesDict['UnitCellParameters']) - 1:
-                    text += ',\n'
-                else:
-                    text += '\n'
-        if i < len (bcDict) - 1:
-            text += '\t' + '],\n'
-        else:
-            text += '\t' + ']\n'
-    text += '}'
-    f. write (text)
-
-def renewalBravaisTypeName (bDict, axis):
-    """rename lattice pattern name of output dict
-       ex base-centered monoclinic --> Monoclinic (C)
-       axis : axisBaseCenter = A, B or C"""
-    bDict = {
-        BravaisLatticeDetermination.key2str (k, axis) : v for k, v in bDict.items()}
-    return bDict
-
-def output_to_py_file (bDict, dir, axisBaseCenter):
-    # make summary document file of BLD Conograph
-    # & output to py file
-    bDict = renewalBravaisTypeName (bDict, axisBaseCenter)
+def output_file (bDict, dir, axisBaseCenter):
+    # Output the results in bDict.
     savePath = os.path.join (dir, 'output', 'output.py')
     with open (savePath, 'w', encoding='utf-8') as f:
         f.write ("''' << Unit-cell Parameters with the Minimal Distance >>\n")
-        f.write ('Bravais type, Number of candidates, a b, c, alpha, beta, gamma, Distance from the input unit cell\n')
-
-        # lattice parameters min distance
-        write_lattice_min_dist (f, bDict)        
+        f.write ('Bravais_type, Number_of_candidates, a b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell\n')
+        
+        ''' Unit-cell parameters with the minimal distances from the input unit cell.'''
+        maxLen = max ([len (BravaisLatticeDetermination.key2str(name, axisBaseCenter)) for name in bDict])
+        for name in bDict.keys():
+            n = len(bDict[name])
+            bname = BravaisLatticeDetermination.key2str(name, axisBaseCenter)
+            text = [' ' * (maxLen - len (bname)) + bname, str (n)]
+            if n > 0:
+                lattice = sym2lattice( bDict[name][0]['GramMatrix'] )
+                d = bDict[name][0]['DistanceFromInput']
+                text += ['{:.4e}'.format (lt) for lt in lattice] # S
+                text += ['{:.4e}'.format (d)] # distance    
+            text = '  '.join (text) + '\n'
+            f. write (text)
         f.write ("'''\n")
-        # lattice candidates
-        write_lattice_candidates (f, bDict)
+        
+        ''' All the unit-cell parameters'''
+        text = 'AllCandidates = {\n'
+        for i, name in enumerate (bDict.keys()):
+            text += '\t' + '# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell\n'
+            text += '\t' + "'" + BravaisLatticeDetermination.key2str(name, axisBaseCenter) + "'" + ' : [\n'
+            for j in range(len(bDict[name])):
+                lattice = sym2lattice( bDict[name][j]['GramMatrix'] )
+                d = bDict[name][j]['DistanceFromInput']
+                text += '\t' * 2
+                text += "'" + '  '.join (['{:.4e}'.format(lt) for lt in (lattice + [d])]) + "'"
+                if j + 1 < len (bDict[name]):
+                    text += ','
+                text += '\n'
+            text += '\t' + ']'
+            if i + 1 < len (bDict):
+                text += ','
+            text += '\n'
+        text += '}\n'
+        f. write (text)
 
 #------------------------------------------------------
 #    main
@@ -203,7 +142,7 @@ def test_samples (dirList = None):
             continue
 
         # save the result to py file with renewal bravais type name
-        output_to_py_file (bc.result.BravaisClasses, dir, bc_input.axisForBaseCenteredSymmetry)
+        output_file (bc.result.toDictionary(), dir, bc_input.axisForBaseCenteredSymmetry)
         print ('completed all: {} ....\n'.format(dir))
 
 if __name__ == '__main__':
