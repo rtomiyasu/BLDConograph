@@ -79,6 +79,50 @@ def Delaunay_reduction (S_input):
     return g, S
 
 
+def Buerger_to_Selling (S_buer):
+    """ Transform Buerger reduced S_buer to a Delaunay reduced symmetric matrix.
+    input : Buerger reduced S_del (3x3 symmetric positive-definite matrix)
+    output: 3x3 basis transform matrix g and g*S*(g^T)
+             such that g S g^T = (sij) is Selling reduced. """
+    g = np.identity (3, dtype="int");
+    if S_buer[0,2] > 0: # Delaunay reduced otherwise.
+        # S_buer[0,1], S_buer[0,2], S_buer[1,2] are positive.
+        # S(x,y,z) := S_buer(x,-y,z)
+        if S_buer[0,2] <= min(S_buer[0,1], S_buer[1,2]):
+            # S(1,1,1) <= S(-1,1,1), S(1,1,-1)
+            # -l1, l1-l2, l3, l2 - l3 with the sums -l2, -l1+l3, l1-l2+l3.
+            g[0,0] =-1
+            g[1,0] = 1
+            g[1,1] =-1
+        elif S_buer[0,1] < S_buer[1,2]:
+            # S[0,1] + S[0,2] > 0 => S(-1,1,1) <= S(1,1,1), S(1,1,-1)
+            # l1, -l2, -l1+l3, l2-l3 with the sums l1-l2, l3, -l1-l2+l3.
+            g[1,1] =-1
+            g[2,0] =-1
+        else: 
+            # S[0,2] + S[1,2] > 0 => S(1,1,-1) <= S(1,1,1), S(-1,1,1)
+            # -l2, -l1+l2, l3, l1-l3 with the sums -l1, -l1+l2+l3, -l2+l3.
+            g[0,0] = 0
+            g[0,1] =-1
+            g[1,0] =-1
+    g = I_ext().dot(g)
+    S = g.dot (S_buer).dot (g.T)
+    assert ( S[0,1] <= 0 and S[0,2] <= 0 and S[1,2] <= 0 and
+             S[0,3] <= 0 and S[1,3] <= 0 and S[2,3] <= 0 ), "Reduced S in Buerger_to_Selling:\n" + str(S)
+    return g, S
+
+def Buerger_to_Delaunay (S_buer):
+    """ Transform Buerger reduced S_buer to a Delaunay reduced symmetric matrix.
+    input : Buerger reduced S_del (3x3 symmetric positive-definite matrix)
+    output: 3x3 basis transform matrix g and g*S*(g^T)
+             such that g S g^T = (sij) is Delaunay reduced. """
+    g, S = Buerger_to_Selling (S_buer)
+    g2 = np.delete( putMatrixToMoveSmallerDiagonalLeftUpper (S), 3, 0) # Delete the last row.
+    S = g2.dot (S).dot (g2.T)
+    assert ( S[0,0] <= S[1,1] <= S[2,2] and 
+             S[0,0] + S[1,1] + (S[0,1] + S[0,2] + S[1,2])*2 >= 0 ), "Reduced S in Buerger_to_Delaunay:\n" + str(S) + str(g)
+    return g2.dot(g), S
+
 if __name__ == '__main__':
     ndim = 3
     # Make a positive-definite matrix S from a basis matrix B.

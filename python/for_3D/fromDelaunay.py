@@ -1,5 +1,5 @@
 import numpy as np
-from Selling_Delaunay_reducion import Delaunay_reduction
+from Selling_Delaunay_reduction import Delaunay_reduction
 
 def Delaunay_to_Dirichlet (S_del):
     """ Transform Delaunay reduced S_del to a Dirichlet reduced symmetric matrix
@@ -19,7 +19,7 @@ def Delaunay_to_Dirichlet (S_del):
             2*abs(S[0,1]) <= S[0,0] and
             2*abs(S[0,2]) <= S[0,0] and
             2*abs(S[1,2]) <= S[1,1] and
-            2*abs(S[0,1] + S[0,2] + S[1,2]) <= S[0,0] + S[1,1] ), "Reduced S:\n" + str(S)
+            2*abs(S[0,1] + S[0,2] + S[1,2]) <= S[0,0] + S[1,1] ), "Reduced S in Delaunay_to_Dirichlet:\n" + str(S) 
     return g, S
 
 
@@ -30,7 +30,7 @@ def Delaunay_to_Buerger (S_del):
     output: 3x3 basis transform matrix g and g*S*(g^T)
              such that g S g^T = (sij) is Buerger reduced. """
     g, S = Delaunay_to_Dirichlet (S_del)
-    # Make s12, s23 non-positive, unless s13 becomes positive. 
+    # Make s12, s23 non-positive. 
     # If this makes s13 positive, make s12, s23 positive, unless s12 or s23 = 0.
     arr = np.identity (3, dtype=int) # Set g = I
     s13 = S[0,2]
@@ -46,7 +46,7 @@ def Delaunay_to_Buerger (S_del):
     g = arr.dot (g)
     S = arr.dot (S).dot (arr)
     assert ( (S[0,1] > 0 and S[0,2] > 0 and S[1,2] > 0) or
-              (S[0,1]>= 0 and S[0,2]>= 0 and S[1,2]>= 0) ), "Reduced S:\n" + str(S)
+              (S[0,1]<= 0 and S[0,2]<= 0 and S[1,2]<= 0) ), "Reduced S:\n" + str(S)
     return g, S
 
 if __name__ == '__main__':
@@ -57,10 +57,9 @@ if __name__ == '__main__':
     S_input = B.dot (B.T)
     print ("* Input S:")
     print (S_input)
-
     g, S = Delaunay_reduction (S_input)
     g2, S = Delaunay_to_Buerger (S)
     g = g2.dot (g)
     print ("* g, Buerger reduced S = g*S*g^T")
     for j in range(ndim):
-         print (" ", g[j], S[j])
+          print (" ", g[j], S[j])

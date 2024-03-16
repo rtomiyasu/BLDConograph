@@ -142,7 +142,7 @@ def test_samples (dirList = None):
 
         # Save the result in output.py.
         output_file (bc.result.toDictionary(bc_input), dir)
-        print ('completed all: {} ....\n'.format(dir))
+        print ('Output file: {}\n'.format('output.py'))
 
 if __name__ == '__main__':
     test_samples ()

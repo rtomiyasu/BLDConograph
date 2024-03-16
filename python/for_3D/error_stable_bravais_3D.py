@@ -4,7 +4,7 @@ sys.path.append('./for_2D')
 import mlist
 from for_2D.error_stable_bravais_2D import gauss_algorithm
 from Buerger_reduction import Buerger_reduction, dist, check_equiv
-from Selling_Delaunay_reduction import Delaunay_reduction
+from Selling_Delaunay_reduction import Buerger_to_Delaunay, Delaunay_reduction
 
 
 def Delaunay_reduction_of_inverse (S):
@@ -409,8 +409,8 @@ class BravaisLatticeDetermination:
         # S_del  = gd.Sobs.gd^T is Delaunay-reduced.
         # The inverse of S_del_inv = gd2.Sobs.gd2^T is Delaunay-reduced.
         gb, S_buer = Buerger_reduction (Sobs) 
-        gd, S_del  = Delaunay_reduction (S_buer); gd = gd.dot(gb)
-        gd2,S_del_inv = Delaunay_reduction_of_inverse (S_buer); gd2 = gd2.dot(gb)
+        gd, S_del  = Buerger_to_Delaunay (S_buer); gd = gd.dot(gb)
+        gd2, S_del_inv = Delaunay_reduction_of_inverse (S_buer); gd2 = gd2.dot(gb)
 
         ## Triclinic
         self.result.BravaisClasses['triclinic'].append([gb, S_buer])
