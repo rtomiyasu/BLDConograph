@@ -289,7 +289,7 @@ class BravaisLatticeDetermination:
         return ans
     
     @staticmethod
-    def base_monoclinic_to_orthorhombic (mlist, eps, AxisForRhombohedralSymmetry):
+    def base_monoclinic_to_orthorhombic (mlist, eps, AxisForBaseCenteredSymmetry):
         #--------------------------------------------
         # Monoclinic --> Orthorhombic 
         #--------------------------------------------
@@ -301,8 +301,8 @@ class BravaisLatticeDetermination:
                             [  0,   0, s33]])
             if check_equiv (Sm, So, eps):
                 # Transeform the base axis to c.
-                if AxisForRhombohedralSymmetry == 'A' or AxisForRhombohedralSymmetry == 'C':
-                    if AxisForRhombohedralSymmetry == 'A': # base-axis = b -> c 
+                if AxisForBaseCenteredSymmetry == 'A' or AxisForBaseCenteredSymmetry == 'C':
+                    if AxisForBaseCenteredSymmetry == 'A': # base-axis = b -> c 
                         gp = permute_matrix([2,0,1])
                     else: # base-axis = a -> c
                         gp = permute_matrix([1,2,0])
@@ -434,7 +434,7 @@ class BravaisLatticeDetermination:
         ## Primitive Monoclinic --> Primitive orthorhombic
         self.result.BravaisClasses['primitive orthorhombic'] = self.primitive_monoclinic_to_orthorhombic (self.result.BravaisClasses['primitive monoclinic'], eps)
         # Base-centered Monoclinic --> Base-centered orthorhombic
-        self.result.BravaisClasses['base-centered orthorhombic'] = self.base_monoclinic_to_orthorhombic (self.result.BravaisClasses['base-centered monoclinic'], eps, AxisForRhombohedralSymmetry)
+        self.result.BravaisClasses['base-centered orthorhombic'] = self.base_monoclinic_to_orthorhombic (self.result.BravaisClasses['base-centered monoclinic'], eps, AxisForBaseCenteredSymmetry)
         
         # --- (Orthorhombic --> Tetragonal) ---
         ## Primitive Orthorhombic --> Primitive tetragonal
