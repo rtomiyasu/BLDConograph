@@ -18,9 +18,11 @@ def Selling_reduction_3D (S_input):
     assert S_input.shape == (ISIZE, ISIZE)
     S = S_input.copy()
     g = np.identity (ISIZE, dtype=int) # Set g = I
+    itnum = 0
     while True:
-        if any (np.diag (S) <= 0):
+        if any (np.diag (S) <= 0) or itnum > 10000:
             return False, g, S
+        itnum = itnum+1
         
         # Search for i, j such that S[i,j] > 0
         flg = False
