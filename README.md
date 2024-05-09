@@ -1,9 +1,12 @@
 # Instructions for BLDConograph
-[BLDConograph version 1.0](https://github.com/rtomiyasu/BLDConograph/tree/main/C++) is a standalone program to execute the Bravais lattice determination by the method introduced in the following reference ([download page](https://github.com/rtomiyasu/BLDConograph/tree/main) in GitHub; [Example of output files](https://github.com/rtomiyasu/BLDConograph/blob/main/C++/src/sample/sample1(Tetragonal(I)_3.84%2C3.84%2C20.1%2C90%2C90%2C90)/output/HERMES_Sr327_250K.out.xml)).
+[BLDConograph version 1.0](https://github.com/rtomiyasu/BLDConograph/tree/main/C++/exe) is a standalone program to execute the Bravais lattice determination by the method introduced in the following reference ([download page](https://github.com/rtomiyasu/BLDConograph/tree/main) in GitHub; [Example of output files](https://github.com/rtomiyasu/BLDConograph/blob/main/C++/src/sample/sample1(Tetragonal(I)_3.84%2C3.84%2C20.1%2C90%2C90%2C90)/output/HERMES_Sr327_250K.out.xml)).
 
 This code is also used in the powder auto-indexing software Conograph. ([Conograph GUI version](https://z-code-software.com/downloads/)).
 
 ## NEWS
+### 2024/5/9
+- The output format was changed in Python version.
+- Software upgraded in C++ version.
 ### 2024/3/6
 - The Python package was newly added.
 ### 2024/1/31
