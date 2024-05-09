@@ -52,9 +52,9 @@ def read_input (dir):
     # Read the input parameters.
     bc_input = BravaisLatticeDetermination.InputType()
     bc_input.Sobs = lattice2sym(input.latticeParameters) # Unit-cell parameters --> symmetric matrix Sobs
-    bc_input.doesPrudentSearch   = input.doesPrudentSymmetrySearch
-    bc_input.axisForRhombohedralSymmetry = input.axisForRhombohedralSymmetry
-    bc_input.axisForBaseCenteredSymmetry = input.axisForBaseCenteredSymmetry
+    bc_input.DoesPrudentSearch   = input.doesPrudentSymmetrySearch
+    bc_input.AxisForRhombohedralSymmetry = input.axisForRhombohedralSymmetry
+    bc_input.AxisForBaseCenteredSymmetry = input.axisForBaseCenteredSymmetry
     bc_input.epsilon = input.epsilon
     
     sys.path.remove (dir) # Remove the path to dir.
@@ -73,7 +73,7 @@ def output_file (bDict, dir):
         
         ''' Unit-cell parameters with the minimal distances from the input unit cell.'''
         maxLen = max ([len (name) for name in bDict])
-        for name in bDict.keys():
+        for name in list (bDict.keys())[::-1]:
             n = len(bDict[name])
             text = [' ' * (maxLen - len (name)) + name, str (n)]
             if n > 0:
@@ -87,7 +87,7 @@ def output_file (bDict, dir):
         
         ''' All the unit-cell parameters'''
         text = 'AllCandidates = {\n'
-        for i, name in enumerate (bDict.keys()):
+        for i, name in enumerate (list (bDict.keys())[::-1]):
             text += '\t' + '# a, b, c, alpha, beta, gamma, Distance_from_the_input_unit_cell\n'
             text += '\t' + "'" + name + "'" + ' : [\n'
             for j in range(len(bDict[name])):
@@ -122,8 +122,8 @@ def test_samples (dirList = None):
         
         # Read input parameters.
         latticeParams, bc_input = read_input (dir) 
-        if not isinstance (bc_input.doesPrudentSearch, bool):
-            bc_input.doesPrudentSearch = bool (bc_input.doesPrudentSearch)
+        if not isinstance (bc_input.DoesPrudentSearch, bool):
+            bc_input.DoesPrudentSearch = bool (bc_input.DoesPrudentSearch)
 
         print ('-----folder name: {} -----'.format (dir))
         print ('<< Input parameters of primitive unit-cells: a, b, c, alpha, beta, gamma >>')
