@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ZCodeParameters>
+ <BLDConographOutput>
+   <!-- << Unit-cell Parameters with the Minimal Distance >>
+   Bravais_type  Number_of_candidates, a, b, c, alpha, beta, gamma, dstance_from_unit_cell
+          Cubic(F)   0
+          Cubic(I)   0
+          Cubic(P)   0
+         Hexagonal   1      2.3157e+01   2.3157e+01   1.0654e+01   9.0000e+01   9.0000e+01   1.2000e+02   2.0549e+01
+      Rhombohedral   0
+     Tetragonal(I)   0
+     Tetragonal(P)   0
+   Orthorhombic(F)   0
+   Orthorhombic(I)   0
+   Orthorhombic(C)   8      2.3157e+01   3.9628e+01   1.0654e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.1568e+01
+   Orthorhombic(P)   0
+     Monoclinic(C)   8      3.9628e+01   2.3157e+01   1.0654e+01   9.0000e+01   9.0871e+01   9.0000e+01   7.1764e+00
+     Monoclinic(P)   1      2.2895e+01   1.0654e+01   2.3003e+01   9.0000e+01   1.1940e+02   9.0000e+01   6.5065e+00
+         Triclinic   1      1.0654e+01   2.2895e+01   2.3003e+01   6.0600e+01   8.9377e+01   8.9119e+01   0.0000e+00
+   -->
+  <!-- Candidates for Cubic(F) -->
+
+  <!-- Candidates for Cubic(I) -->
+
+  <!-- Candidates for Cubic(P) -->
+
+  <!-- Candidates for Hexagonal -->
+  <UnitCellCandidate>
+   <CrystalSystem> Hexagonal </CrystalSystem>
+   <UnitCellParameters>
+   <!-- a, b, c, alpha, beta, gamma, distance from input cell -->
+       2.3157e+01   2.3157e+01   1.0654e+01   9.0000e+01   9.0000e+01   1.2000e+02   2.0549e+01
+   </UnitCellParameters>
+  </UnitCellCandidate>
+
+  <!-- Candidates for Rhombohedral -->
+
+  <!-- Candidates for Tetragonal(I) -->
+
+  <!-- Candidates for Tetragonal(P) -->
+
+  <!-- Candidates for Orthorhombic(F) -->
+
+  <!-- Candidates for Orthorhombic(I) -->
+
+  <!-- Candidates for Orthorhombic(C) -->
+  <UnitCellCandidate>
+   <CrystalSystem> Orthorhombic(C) </CrystalSystem>
+   <UnitCellParameters>
+   <!-- a, b, c, alpha, beta, gamma, distance from input cell -->
+       2.3157e+01   3.9628e+01   1.0654e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.1568e+01
+       2.3157e+01   3.9628e+01   1.0654e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.1568e+01
+       2.2895e+01   4.0082e+01   1.0654e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.1584e+01
+       2.2895e+01   4.0082e+01   1.0654e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.1584e+01
+       2.3003e+01   3.9896e+01   1.0654e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.8765e+01
+       2.3003e+01   3.9896e+01   1.0654e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.8765e+01
+       1.0654e+01   4.0879e+01   2.3157e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.5170e+02
+       1.0654e+01   4.1177e+01   2.3003e+01   9.0000e+01   9.0000e+01   9.0000e+01   1.5514e+02
+   </UnitCellParameters>
+  </UnitCellCandidate>
+
+  <!-- Candidates for Orthorhombic(P) -->
+
+  <!-- Candidates for Monoclinic(C) -->
+  <UnitCellCandidate>
+   <CrystalSystem> Monoclinic(C) </CrystalSystem>
+   <UnitCellParameters>
+   <!-- a, b, c, alpha, beta, gamma, distance from input cell -->
+       3.9628e+01   2.3157e+01   1.0654e+01   9.0000e+01   9.0871e+01   9.0000e+01   7.1764e+00
+       2.2895e+01   4.0082e+01   1.0654e+01   9.0000e+01   9.0881e+01   9.0000e+01   1.0298e+01
+       4.0082e+01   2.2895e+01   1.0654e+01   9.0000e+01   9.0212e+01   9.0000e+01   1.1366e+01
+       2.3157e+01   3.9628e+01   1.0654e+01   9.0000e+01   9.0252e+01   9.0000e+01   1.1465e+01
+       3.9896e+01   2.3003e+01   1.0654e+01   9.0000e+01   9.0652e+01   9.0000e+01   1.7474e+01
+       2.3003e+01   3.9896e+01   1.0654e+01   9.0000e+01   9.0623e+01   9.0000e+01   1.8383e+01
+       4.0879e+01   1.0654e+01   2.3157e+01   9.0000e+01   9.0366e+01   9.0000e+01   1.5146e+02
+       4.1177e+01   1.0654e+01   2.3003e+01   9.0000e+01   9.0891e+01   9.0000e+01   1.5373e+02
+   </UnitCellParameters>
+  </UnitCellCandidate>
+
+  <!-- Candidates for Monoclinic(P) -->
+  <UnitCellCandidate>
+   <CrystalSystem> Monoclinic(P) </CrystalSystem>
+   <UnitCellParameters>
+   <!-- a, b, c, alpha, beta, gamma, distance from input cell -->
+       2.2895e+01   1.0654e+01   2.3003e+01   9.0000e+01   1.1940e+02   9.0000e+01   6.5065e+00
+   </UnitCellParameters>
+  </UnitCellCandidate>
+
+  <!-- Candidates for Triclinic -->
+  <UnitCellCandidate>
+   <CrystalSystem> Triclinic </CrystalSystem>
+   <UnitCellParameters>
+   <!-- a, b, c, alpha, beta, gamma, distance from input cell -->
+       1.0654e+01   2.2895e+01   2.3003e+01   6.0600e+01   8.9377e+01   8.9119e+01   0.0000e+00
+   </UnitCellParameters>
+  </UnitCellCandidate>
+
+ </BLDConographOutput>
+</ZcodeParameters>
