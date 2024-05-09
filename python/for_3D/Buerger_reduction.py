@@ -25,12 +25,11 @@ def check_equiv (S, T, eps):
         output: True or False. """
     assert S.shape == T.shape
     nrow, ncol = S.shape
-    assert nrow == ncol
     for i in range(nrow):
         if not equiv_eps(S[i,i], T[i,i], eps):
             return False
         for j in range(i+1, nrow):
-            if not equiv_eps(S[i,i] + S[j,j] + 2 * S[i,j], T[i,i] + T[j,j] + 2 * T[i,j], eps):
+            if not equiv_eps(S[i,i] + S[j,j] + 2. * S[i,j], T[i,i] + T[j,j] + 2. * T[i,j], eps):
                 return False
     return True
 
