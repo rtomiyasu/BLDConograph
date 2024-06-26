@@ -247,4 +247,31 @@ inline SymMat<T> put_sym_matrix_sizeNtoNplus1(const SymMat<T>& rhs)
 	return ans;
 }
 
+inline vector<Int4> put_complement_set (Int4 dim, Int4 i, Int4 j)
+{
+    assert (i != j);
+    assert (0 <= i && i < dim);
+    assert (0 <= j && j < dim);
+    vector <Int4> indices;
+    for (Int4 l = 0; l < dim; l++)
+    {
+        if (l != i && l != j)
+        {
+            indices.push_back (l);
+        }
+    }
+    return indices;
+}
+
+inline NRMat<Int4> put_reduction_matrix_4D (Int4 i, Int4 j)
+{
+	vector <Int4> indices = put_complement_set (4, i, j);
+    Int4 k = indices[0]; Int4 l = indices[1];
+    NRMat<Int4> transmat (4, 4, 0);
+    transmat[i][i] = -1;
+    transmat[j][j] = transmat[k][k] = transmat[l][l] = 1;
+    transmat[k][i] = transmat[l][i] = 1;
+    return transmat;
+}
+
 #endif

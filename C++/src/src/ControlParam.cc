@@ -64,51 +64,52 @@ const pair< RWParamProperty, RWParamData<Double> > ControlParam::LatticeParamete
 const pair<RWParamProperty, RWParamData<bool> > ControlParam::DoesPrudentSymSearch_Data(
 		RWParamProperty(BOOLFLAG, "DoesPrudentSymmetrySearch"),
 		RWParamData<bool>(false, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) );
-const pair<RWParamProperty, RWParamData<bool> > ControlParam::OutputSymmetry_Data[NUM_LS]
-	= {
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputTriclinic"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputMonoclinicP"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputMonoclinicB"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputOrthorhombicP"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputOrthorhombicB"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputOrthorhombicI"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputOrthorhombicF"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputTetragonalP"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputTetragonalI"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputRhombohedral"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputHexagonal"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputCubicP"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputCubicI"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
-			pair<RWParamProperty, RWParamData<bool> >( 
-				RWParamProperty(BOOLFLAG, "OutputCubicF"),
-				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) )
-		};
+
+//const pair<RWParamProperty, RWParamData<bool> > ControlParam::OutputSymmetry_Data[NUM_LS]
+//	= {
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputTriclinic"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputMonoclinicP"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputMonoclinicB"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputOrthorhombicP"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputOrthorhombicB"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputOrthorhombicI"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputOrthorhombicF"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputTetragonalP"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputTetragonalI"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputRhombohedral"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputHexagonal"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputCubicP"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputCubicI"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) ),
+//			pair<RWParamProperty, RWParamData<bool> >(
+//				RWParamProperty(BOOLFLAG, "OutputCubicF"),
+//				RWParamData<bool>(true, REPLACE_NONE<bool>, NULL, false, NULL, false, -1, -1) )
+//		};
 
 const pair<RWParamProperty, RWParamData<Double> > ControlParam::Resol_Data(
 		RWParamProperty(DVALUE, "Resolution"), 
@@ -131,10 +132,10 @@ ControlParam::ControlParam()
 		MonoBaseAxis(MonoBaseAxis_Data.second.initial_value),
 		RhomAxis(RhomAxis_Data.second.initial_value)
 {
-	for(Int4 i=0; i<NUM_LS; i++)
-	{
-		OutputSymmetry[i] = OutputSymmetry_Data[i].second.initial_value;
-	}
+//	for(Int4 i=0; i<NUM_LS; i++)
+//	{
+//		OutputSymmetry[i] = OutputSymmetry_Data[i].second.initial_value;
+//	}
 }
 
 
@@ -160,10 +161,10 @@ void ControlParam::setData(const RWParamProperty& parent_prop,
 		tray.push_back( RWParam_void(LatticeParameter_Data) );
 
 		tray.push_back( RWParam_void(DoesPrudentSymSearch_Data, &DoesPrudentSymSearch) );
-		for(Int4 i=0; i<NUM_LS; i++)
-		{
-			tray.push_back( RWParam_void(OutputSymmetry_Data[i], &OutputSymmetry[i]) );
-		}
+//		for(Int4 i=0; i<NUM_LS; i++)
+//		{
+//			tray.push_back( RWParam_void(OutputSymmetry_Data[i], &OutputSymmetry[i]) );
+//		}
 		tray.push_back( RWParam_void(Resol_Data, &Resol) );
 		tray.push_back( RWParam_void(MonoBaseAxis_Data, &MonoBaseAxis) );
 		tray.push_back( RWParam_void(RhomAxis_Data, &RhomAxis) );

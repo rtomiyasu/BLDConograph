@@ -15,10 +15,6 @@ EXECUTABLES :=
 SUBDIRS := \
 object \
 object/bravais_type \
-object/centring_type \
-object/lattice_symmetry \
-object/point_group \
-object/symmetric_operation \
 object/utility_data_structure \
 object/utility_func \
 object/utility_lattice_reduction \

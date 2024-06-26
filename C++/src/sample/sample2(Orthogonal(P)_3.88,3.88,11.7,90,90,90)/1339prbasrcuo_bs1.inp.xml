@@ -23,7 +23,7 @@
 
 	<DoesPrudentSymmetrySearch>
   	<!-- 0:quick search, 1:prudent search) -->
-	 0
+	 1
 	</DoesPrudentSymmetrySearch>
 
   	<!-- Bravais types to execute Bravais lattice determination (0:No, 1:Yes) -->

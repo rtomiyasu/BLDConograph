@@ -28,15 +28,16 @@ THE SOFTWARE.
 #define _ControlParam_h_
 // ControlParam.hh
 
+# include <iostream>
+#include <map>
 #include "RietveldAnalysisTypes.hh"
+#include "bravais_type/enumAxis.hh"
 #include "zerror_type/error_out.hh"
-#include "bravais_type/enumBravaisType.hh"
 #include "utility_data_structure/VecDat3.hh"
 #include "utility_data_structure/SymMat.hh"
 #include "utility_func/lattice_constant.hh"
-#include "utility_lattice_reduction/put_Selling_reduced_lattice.hh"
 #include "utility_rw_param/I_ReadData.hh"
-
+using namespace std;
 
 class ControlParam : public I_ReadData
 {
@@ -65,6 +66,7 @@ private:
 	bool OutputSymmetry[NUM_LS];
 
 	Double Resol;	// unit->Angstrom.
+	Double eps;
 
 	// Enviromental parameters.
 	static const Int4 NumCores;
@@ -86,10 +88,8 @@ public:
 	inline void setResolution(const Double& arg) { Resol = arg; };
 
 	// Put functions.
-	inline bool putDeloneReducedLatticeParameter(SymMat<Double>& S_super) const;
-
 	inline const bool& DoesPrudentSymmetrySearch() const { return DoesPrudentSymSearch; };
-	inline const bool& putOutputSymmetry(const eBravaisType& i) const { return OutputSymmetry[(Int4)i]; };
+//	inline const bool& putOutputSymmetry(const eBravaisType& i) const { return OutputSymmetry[(Int4)i]; };
 
 	inline const Double& putResolution() const { return Resol; };
 
@@ -100,21 +100,35 @@ public:
 	const string& putTagLabel() const;
     void setData(const RWParamProperty& parent_prop,
 			vector<RWParam_void>& tray);
+	inline const string& put_ABCaxisString () const {return MonoBaseAxis;};
+	inline const string& put_RHaxisString () const {return RhomAxis;};
+	inline NRMat<Double> putSobs () const;
 };
 
-inline bool ControlParam::putDeloneReducedLatticeParameter(SymMat<Double>& S_super) const
+template<class T>
+inline NRMat<T> symMat2nrMat (SymMat<T> m)
 {
-	assert( S_super.size() == 4 );
-	SymMat<Double> S(3);
-	NRMat<Int4> trans_mat(4,3);
-
-	calCoParameter(m_length, m_angle, S);
-	if( !put_Selling_reduced_dim_3(S, S_super, trans_mat) )
+	Int4 ndim = m.size();
+	NRMat<T> ans (ndim, ndim, 0);
+	for (Int4 i = 0; i < ndim; i++)
 	{
-		return false;
+		ans[i][i] = m(i,i);
+		for (Int4 j = i + 1; j < ndim; j++)
+		{
+			ans[i][j] = ans[j][i] = m(j,i);
+		}
 	}
-	moveSmallerDiagonalLeftUpper(S_super);
-	return true;
+	return ans;
+}
+
+inline NRMat<Double> ControlParam::putSobs () const
+{
+	SymMat<Double> Sobs_inv (3), S_super (4);
+	NRMat<Double> Sobs;
+	NRMat<Int4> trans_mat(4,3);
+	calCoParameter(m_length, m_angle, Sobs_inv);
+	Sobs = inverse_mat_3x3 (symMat2nrMat (Sobs_inv));
+	return Sobs;
 }
 
 #endif

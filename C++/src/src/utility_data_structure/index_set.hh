@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include<vector>
 #include<algorithm>
 #include "../RietveldAnalysisTypes.hh"
-#include "../zparam/etype_ID.hh"
 
 template <class T>
 class index_set{
@@ -42,14 +41,6 @@ public:
 
 // Vec_DP_save are used as a container of vectors for the saving memory.
 typedef vector< index_set<Double> > Vec_DP_save;
-
-struct constr_DP{
-	etype_ID ID;
-	Vec_DP_save constr;
-};
-
-// Mat_DP_save are used as a container of flags and constraints for the saving memory.
-typedef vector< constr_DP > Mat_DP_constr;
 
 
 // Returns the inner product.(lhs, rhs are vectors.)

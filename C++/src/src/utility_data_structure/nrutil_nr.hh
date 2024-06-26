@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include <assert.h>
 #include <cstdlib>
+#include <algorithm>
 #include "../zerror_type/error_out.hh"
 
 using namespace std;
@@ -456,6 +457,22 @@ NRMat<T> operator/(const NRMat<T>& lhs, const Int4& rhs)
 	return ans;
 }
 
+inline NRMat<Double> int2double (const NRMat<Int4> mat)
+{
+	Int4 irow = mat.nrows();
+	Int4 icol = mat.ncols();
+
+	NRMat<Double> ans (irow, icol, 0.0);
+	for (Int4 i=0; i<irow; i++)
+	{
+		for (Int4 j=0; j<icol; j++)
+		{
+			ans[i][j] = double (mat[i][j]);
+		}
+	}
+	return ans;
+}
+
 template <class T>
 NRMat<T> mprod(const NRMat<T>& lhs, const NRMat<T>& rhs)
 {
@@ -473,6 +490,68 @@ NRMat<T> mprod(const NRMat<T>& lhs, const NRMat<T>& rhs)
 	return ans;
 }
 
+// ----------over load of mprod in nrutil_nr.cc-------------
+// lhs     rhs        output
+// int,    int    ---> int
+// double, double ---> double
+// int,    double ---> double
+// double, int    ---> double 
+// <<int @ double --> double>>
+
+inline NRMat<Double> mprod (const NRMat<Int4>& lhs, const NRMat<Double>& rhs)
+{
+	NRMat<Double> lhs_ = int2double (lhs);
+	NRMat<Double> ans = mprod (lhs_, rhs);
+	return ans;
+}
+
+// <<double @ int --> double>>
+inline NRMat<Double> mprod (const NRMat<Double>& lhs, const NRMat<Int4>& rhs)
+{
+	NRMat<Double> rhs_ = int2double (rhs);
+	NRMat<Double> ans = mprod (lhs, rhs_);
+	return ans;
+}
+
+template<class T>
+NRMat<T> diagonal (const vector <T> dvec)
+{
+	int ndim = dvec.size();
+	NRMat<T> mat (ndim, ndim, 0);
+	for (Int4 i = 0; i < ndim; i++)
+	{
+		mat[i][i] = dvec[i];
+	}
+	return mat;
+} 
+
+// multiple definition error!!
+inline Double trace (const NRMat<Double> mat)
+{
+	Double ans = 0.0;
+	int ndim = mat.nrows();
+	for (int i = 0; i < ndim; i++)
+	{
+		ans += mat[i][i];
+	}
+	return ans;
+}
+
+template <class T>
+NRMat<T> difference (const NRMat<T>& rhs, const NRMat<T>& lhs)
+{
+	int irow = rhs.nrows();
+	int icol = rhs.ncols();
+	NRMat<T> ans (irow, icol, 0);
+	for (int i = 0; i < irow; i++)
+	{
+		for (int j = 0; j < icol; j++)
+		{
+			ans[i][j] = rhs[i][j] - lhs[i][j];
+		}
+	}
+	return ans;
+}
 
 //template <class T>
 //NRMat<T> transpose(const NRMat<T>& lhs)
@@ -486,7 +565,6 @@ NRMat<T> mprod(const NRMat<T>& lhs, const NRMat<T>& rhs)
 //	
 //	return ans;
 //}
-
 
 template <class T>
 inline NRMat<T> transpose(const NRMat<T>& rhs)
@@ -595,6 +673,27 @@ inline NRMat<Int4> Inverse3(const NRMat<Int4>& rhs)
 	}
 }
 
+template<class T>
+T det_2x2 (NRMat<T> mat)
+{
+	T a11, a22, a12, a21;
+	a11 = mat[0][0]; a12 = mat[0][1];
+	a21 = mat[1][0]; a22 = mat[1][1];
+	return (a11 * a22) - (a12 * a21);
+}
+
+template<class T>
+T det_3x3 (NRMat<T> mat)
+{
+	T ans = mat[0][0] * mat[1][1] * mat[2][2]; // a11*a22*a33
+	ans += mat[0][1] * mat[1][2] * mat[2][0]; //+= a12*a23*a31
+	ans += mat[0][2] * mat[2][1] * mat[1][0]; //+= a13*a32*a21
+	ans -= mat[0][2] * mat[1][1] * mat[2][0]; //-= a13*a22*a31
+	ans -= mat[0][1] * mat[1][0] * mat[2][2]; //-= a12*a21*a33
+	ans -= mat[0][0] * mat[2][1] * mat[1][2]; //-= a11*a32*a23
+	return ans;
+}
+
 
 /*
 template <class T>
@@ -618,6 +717,90 @@ inline NRMat<T> identity_matrix(const Int4& isize)
 	for(Int4 k=0; k<isize; k++) TransMat[k][k] = 1;
 
 	return TransMat;
+}
+
+template <class T>
+vector <Int4> argsort (const vector<T>& vec)
+{
+    Int4 vecSize = vec.size();
+	vector <Int4> index (vec.size());
+	for (Int4 i = 0; i < vecSize; i++) index[i] = i;
+    sort (index.begin(), index.end(),
+            [&](Int4 x, Int4 y){return vec[x] < vec[y];});
+    return index;
+}
+
+template <class T>
+NRMat<T> mat_delete (const NRMat<T>& mat, const Int4& idx, const Int4& axis)
+{
+	assert (axis == 0 || axis == 1);
+	assert (0 <= idx);
+	if (axis == 0) assert (idx < mat.nrows());
+	else assert (idx < mat.ncols());
+
+    vector <Int4> idxRow, idxCol;
+    for (Int4 i = 0; i < mat.nrows(); i++)
+    {
+        if (axis != 0 || (axis == 0 && i != idx))
+        idxRow.push_back (i);
+    }
+    for (Int4 j = 0; j < mat.ncols(); j++)
+    {
+        if (axis != 1 || (axis == 1 && j != idx))
+        idxCol.push_back (j);
+    }
+    
+	Int4 sizeRow = idxRow.size();
+	Int4 sizeCol = idxCol.size();
+	NRMat<T> ans (sizeRow, sizeCol, 0);
+    for (Int4 i = 0; i < sizeRow; i++)
+    {
+        for (Int4 j = 0; j < sizeCol; j++)
+        {
+            ans[i][j] = mat[idxRow[i]][idxCol[j]];
+        }
+    }
+
+	return ans;
+}
+
+template <class T>
+Double cofactor (const NRMat<T>& mat, const Int4& i, const Int4& j)
+{
+	NRMat<T> m2x2 = mat_delete (mat_delete (mat, i, 0), j, 1);
+	T ans = ((i + j)%2==0?1:-1) * det_2x2 (m2x2);
+	return ans;
+}
+
+template <class T>
+NRMat<T> inverse_mat_3x3 (const NRMat<T>& mat)
+{
+	Double det = det_3x3 (mat);
+	NRMat<T> ans (3,3,0);
+	for (Int4 i = 0; i < mat.nrows(); i++)
+	{
+		for (Int4 j = 0; j < mat.ncols(); j++)
+		{
+			ans[i][j] = cofactor (mat, i, j) / det;
+		}
+	}
+	return transpose (ans);
+}
+
+template <class T>
+NRMat<T> put_matrix (const vector<vector<T>>& vec)
+{
+	Int4 nrow = vec.size();
+	Int4 ncol = vec[0].size();
+	NRMat<T> ans (nrow, ncol, 0);
+	for (Int4 i = 0; i < nrow; i++)
+	{
+		for (Int4 j = 0; j < ncol; j++)
+		{
+			ans[i][j] = vec[i][j];
+		}
+	}
+	return ans;
 }
 
 #endif /* _NR_UTIL_H_ */

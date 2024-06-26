@@ -26,11 +26,10 @@ THE SOFTWARE.
  */
 #include "lattice_constant.hh"
 #include "transform_sym_matrix.hh"
-#include "zmath.hh"
 
 
-static const Double DegRad = 180.0 / PI();
-static const Double RadDeg = PI() /180.0; // = pi / 180.0;
+static const Double DegRad = 180.0 / M_PI;
+static const Double RadDeg = M_PI /180.0; // = pi / 180.0;
 
 // lattice_constant a, b, c, alpha, beta, gamma(deg).
 void calCoParameter(const VecDat3<Double>& length_axis, const VecDat3<Double>& angle_axis, SymMat<Double>& S)
@@ -174,13 +173,4 @@ void calLatticeConstant(const SymMat<Double>& S, VecDat3<Double>& length_axis, V
 	// alpha, beta, gamma
 	VecDat3<Double> cos_angle, sin_angle;
 	calLatticeConstant(S, length_axis, angle_axis, cos_angle, sin_angle);
-}
-
-void calLatticeConstant(const SymMatWCovar& S, VecDat3<Double>& length_axis, VecDat3<Double>& angle_axis,
-SymMat<Double>& LatConst_covar)
-{
-	// alpha, beta, gamma
-	VecDat3<Double> cos_angle, sin_angle;
-	calLatticeConstant(S.ValMat(), length_axis, angle_axis, cos_angle, sin_angle);
-	changeCovariantMatrixStoLatticeConstant(S.CovMat(), length_axis, cos_angle, sin_angle, LatConst_covar);
 }

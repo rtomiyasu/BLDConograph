@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include"../RietveldAnalysisTypes.hh"
 #include"../utility_data_structure/SymMat.hh"
 #include"../utility_data_structure/VecDat3.hh"
-#include"../utility_data_structure/SymMatWCovar.hh"
 
 
 inline const Int4& PNLatConst()
@@ -50,9 +49,6 @@ void calCoParameter(const VecDat3<Double>&, const VecDat3<Double>&, SymMat<Doubl
 
 // calculate the lattice_constants a, b, c, alpha, beta, gamma(deg) from S(i.e. A*,B*,C*,D*,E*,F*).
 void calLatticeConstant(const SymMat<Double>&, VecDat3<Double>&, VecDat3<Double>&);
-
-// calculate the lattice_constants a, b, c, alpha, beta, gamma(deg) from S(i.e. A*,B*,C*,D*,E*,F*).
-void calLatticeConstant(const SymMatWCovar&, VecDat3<Double>&, VecDat3<Double>&, SymMat<Double>& LatConst_covar);
 
 
 #endif /*LATTICE_CONSTANT_HH_*/
