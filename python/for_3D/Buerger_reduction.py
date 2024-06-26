@@ -8,18 +8,18 @@ def dist (S, T):
     return np.sqrt(max(0.,np.trace(diff.dot (diff))))
 
 def equiv_eps (s, t, eps):
-    """ Check whether s and t are nearly equal, i.e., abs(s-t) <= eps*max(s,t).
+    """ Check whether s and t are nearly equal, i.e., abs(s-t) <= eps*min(s,t).
         s, t  : values,
         eps   : threshold on relative error,
         output: True or False. """
-    max_ST = np.maximum (s, t)
+    min_ST = np.minimum (s, t)
     diff_ST = np.abs (s - t)
-    return diff_ST <= eps * max_ST
+    return diff_ST <= eps * min_ST
 
 def check_equiv (S, T, eps):
     """ Check whether S and T are nearly equal, i.e., for every 1 <= i < j <= n,
-        (i) |sii - tii| <= eps*max (sii, tii)
-        (ii)|(sii + sjj + 2sij) - (tii + tjj + 2tij)| <= eps*max (sii + sjj + 2sij, tii + tjj + 2tij)
+        (i) |sii - tii| <= eps*min (sii, tii)
+        (ii)|(sii + sjj + 2sij) - (tii + tjj + 2tij)| <= eps*min (sii + sjj + 2sij, tii + tjj + 2tij)
         S, T  : nxn symmetric matrices,
         eps   : threshold on relative error,
         output: True or False. """
