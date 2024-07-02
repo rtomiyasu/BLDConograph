@@ -78,6 +78,7 @@ void buerger_reduction (
     S = S_input;
     g = identity_matrix<Int4> (ndim);
 
+    static const double EPS = 1.0+1.0e-14;
     while (true)
     //for (int l = 0; l < 3; l++)
     {
@@ -103,7 +104,7 @@ void buerger_reduction (
             }
         };
         
-        if ((S[0][0] <= S[1][1] && S[1][1] <= S[2][2]) & (2 * abs (S[0][1]) <= S[0][0]) & (2 * abs (S[0][2]) <= S[0][0]))
+        if ((S[0][0] <= S[1][1] && S[1][1] <= S[2][2]) & (2 * abs (S[0][1]) <= S[0][0]*EPS) & (2 * abs (S[0][2]) <= S[0][0]*EPS))
             {
                 assert (2 * abs (S[1][2]) <= S[1][1]);
                 vector<Int4> diag = {1, 1, 1};
@@ -141,9 +142,9 @@ void buerger_reduction (
     //print_mat (S);
     assert (
     (S[0][0] <= S[1][1] && S[1][1] <= S[2][2]) &
-    (2 * abs (S[0][1]) <= S[0][0]) &
-    (2 * abs (S[0][2]) <= S[0][0]) &
-    (2 * abs (S[1][2]) <= S[1][1]) &
+    (2 * abs (S[0][1]) <= S[0][0]*EPS) &
+    (2 * abs (S[0][2]) <= S[0][0]*EPS) &
+    (2 * abs (S[1][2]) <= S[1][1]*EPS) &
     (((S[0][1] > 0) & (S[0][2] > 0) & (S[0][2] > 0)) |
     ((S[0][1] <= 0) & (S[0][2] <= 0) & (S[0][2] <= 0))));
     
