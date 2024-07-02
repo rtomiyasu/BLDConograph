@@ -55,6 +55,7 @@ def Buerger_reduction (S_input):
     assert S_input.shape == (ndim,ndim)
     S = S_input.copy()
     g = np.identity (ndim, dtype=int) # Set g = I
+    EPS = 1.0+1.0e-14
     while True:
         k=0
         # 0≦i＜j≦3
@@ -72,8 +73,8 @@ def Buerger_reduction (S_input):
                 # g = arr*g, arr*S*(arr^T) 
                 g = arr.dot (g)
                 S = arr.dot (S).dot (arr)
-        if ( S[0,0] <= S[1,1] <= S[2,2] and 2*abs(S[0,1]) <= S[0,0] and
-            2*abs(S[0,2]) <= S[0,0] ):
+        if ( S[0,0] <= S[1,1] <= S[2,2] and 2*abs(S[0,1]) <= S[0,0]*EPS and
+            2*abs(S[0,2]) <= S[0,0]*EPS ):
             assert 2*abs(S[1,2]) <= S[1,1]
             # Make s12, s23 non-positive. 
             diag = [1,1,1]
@@ -106,9 +107,9 @@ def Buerger_reduction (S_input):
     g = arr.dot (g)
     S = arr.dot (S).dot (arr)
     assert ( S[0,0] <= S[1,1] <= S[2,2] and 
-            2*abs(S[0,1]) <= S[0,0] and
-            2*abs(S[0,2]) <= S[0,0] and
-            2*abs(S[1,2]) <= S[1,1] and
+            2*abs(S[0,1]) <= S[0,0]*EPS and
+            2*abs(S[0,2]) <= S[0,0]*EPS and
+            2*abs(S[1,2]) <= S[1,1]*EPS and
             ( (S[0,1] > 0 and S[0,2] > 0 and S[1,2] > 0) or
               (S[0,1]<= 0 and S[0,2]<= 0 and S[1,2]<= 0) ) ), "Reduced S:\n" + str(S)
     assert 2*(S[0,1] + S[0,2] + S[1,2]) + S[0,0] + S[1,1] >= 0, "Reduced S:\n" + str(S)
