@@ -114,14 +114,16 @@ void buerger_reduction (
                 g = mprod (arr, g);
                 S = mprod (mprod (arr, S), arr);
         
-                if (2 * (S[0][1] + S[0][2] + S[1][2]) + S[0][0] + S[1][1] < 0)
+                if( -2 * (S[0][1] + S[0][2] + S[1][2]) <= (S[0][0] + S[1][1])*EPS )
                 {
+			break;
+                }
+                else
+                { 
                     arr = array_list[3];
                     g = mprod (arr, g);
                     S = mprod (mprod (arr, S), transpose (arr));
-                }
-                else
-                { break; }
+		}
             }
     };
 
@@ -141,15 +143,14 @@ void buerger_reduction (
 
     //print_mat (S);
     assert (
-    (S[0][0] <= S[1][1] && S[1][1] <= S[2][2]) &
-    (2 * abs (S[0][1]) <= S[0][0]*EPS) &
-    (2 * abs (S[0][2]) <= S[0][0]*EPS) &
-    (2 * abs (S[1][2]) <= S[1][1]*EPS) &
-    (((S[0][1] > 0) & (S[0][2] > 0) & (S[0][2] > 0)) |
-    ((S[0][1] <= 0) & (S[0][2] <= 0) & (S[0][2] <= 0))));
+    (S[0][0] <= S[1][1] && S[1][1] <= S[2][2]) &&
+    (2 * abs (S[0][1]) <= S[0][0]*EPS) &&
+    (2 * abs (S[0][2]) <= S[0][0]*EPS) &&
+    (2 * abs (S[1][2]) <= S[1][1]*EPS) &&
+    (((S[0][1] > 0) && (S[0][2] > 0) && (S[0][2] > 0)) |
+    ((S[0][1] <= 0) && (S[0][2] <= 0) && (S[0][2] <= 0))));
     
-    assert (
-    2 * (S[0][1] + S[0][2] + S[1][2]) + S[0][0] + S[1][1] >= 0);
+    assert (-2 * (S[0][1] + S[0][2] + S[1][2]) <= (S[0][0] + S[1][1])*EPS);
 
     Double d1 = dist (S, mprod (mprod (g, S_input),
                                     transpose (g)));
@@ -159,6 +160,5 @@ void buerger_reduction (
 
     //return forward_as_tuple (g, S);
 }
-
 
 #endif /*PUT_MINKOWSKI_REDUCED_LATTICE_HH_*/

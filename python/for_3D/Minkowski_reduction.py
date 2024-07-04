@@ -34,24 +34,24 @@ def check_equiv (S, T, eps):
     return True
 
 
-def Buerger_reduction (S_input):
-    """ Buerger reduction (= 3D case of Minkowski reduction) algorithm for 3D lattices.
+def Minkowski_reduction (S_input):
+    """ Minkowski reduction algorithm for 3D lattices.
     input : 3x3 symmetric positive-definite S = S_input
     output: 3x3 basis transform matrix g and g*S*(g^T)
              such that g S g^T = (sij) satisfies 
              - s11<=s22<=s33,
              - 2*|s12|,2*|s13| <= s11, 2*|s23| <= s22,
-             - s12, s13, s23 > 0 or s12, s13, s23 <= 0,
+             - s12,s23<=0,
              - -2*(s12 + s13 + s23) <= s11+s22. """
     ndim = 3
     arr_list = [ np.array ([[0,1,0], [1,0,0], [0,0,1]]),
                  np.array ([[0,0,1], [0,1,0], [1,0,0]]),
                  np.array ([[1,0,0], [0,0,1], [0,1,0]]),
-                 np.identity (ndim, dtype=int) ] # these matrices are all symmetric.
+                 np.identity (ndim, dtype=int),
+		 np.array ([[-1,0,0], [0,1,0], [0,0,1]]) ] # these matrices are all symmetric.
     arr_list[3][2,0] = 1
     arr_list[3][2,1] = 1
-    # [[1,0,0],[0,1,0],[1,1,1]]
-
+    
     assert S_input.shape == (ndim,ndim)
     S = S_input.copy()
     g = np.identity (ndim, dtype=int) # Set g = I
@@ -91,27 +91,10 @@ def Buerger_reduction (S_input):
                 arr = arr_list[3]
                 g = arr.dot (g)
                 S = arr.dot (S).dot (arr.T)
-                
-    # At this point, s12, s23 are non-positive. 
-    # If s13 is positive, make s12, s23 positive, unless s12 or s23 = 0.
-    diag = [1,1,1]
-    if S[0,2] > 0:
-        if S[0,1] == 0:
-            diag[0] = -1
-        elif S[1,2] == 0:
-            diag[2] = -1
-        else:
-            diag[0] = -1
-            diag[2] = -1
-    arr = np.diag(diag)
-    g = arr.dot (g)
-    S = arr.dot (S).dot (arr)
-    assert ( S[0,0] <= S[1,1] <= S[2,2] and 
-            2*abs(S[0,1]) <= S[0,0]*EPS and
-            2*abs(S[0,2]) <= S[0,0]*EPS and
-            2*abs(S[1,2]) <= S[1,1]*EPS and
-            ( (S[0,1] > 0 and S[0,2] > 0 and S[1,2] > 0) or
-              (S[0,1]<= 0 and S[0,2]<= 0 and S[1,2]<= 0) ) ), "Reduced S:\n" + str(S)
+    
+    assert ( S[0,0] <= S[1,1] <= S[2,2]*EPS and
+            2*abs(S[0,1]) <= S[0,0]*EPS and 2*abs(S[0,2]) <= S[0,0]*EPS and
+            2*abs(S[1,2]) <= S[1,1]*EPS and S[0,1] <= 0 and S[1,2] <= 0 ), "Reduced S:\n" + str(S)
     assert -2*(S[0,1] + S[0,2] + S[1,2]) <= (S[0,0] + S[1,1])*EPS, "Reduced S:\n" + str(S)
     assert dist(S, g.dot (S_input).dot (g.T)) <= dist(S_input, np.zeros((ndim,ndim)))*1.0e-10, "Reduced S:\n" + str(S)
     return g, S
@@ -132,10 +115,40 @@ if __name__ == '__main__':
     print (T)
     flg = check_equiv (S_input, T, 0.1)
     print (flg)
-    """print ("* Input S:")
+    print ("* Input S:") 
     print (S_input)
 
-    g, S = Buerger_reduction (S_input)
+    g, S = Minkowski_reduction (S_input)
     print ("* g, Buerger reduced S = g*S*g^T")
     for j in range(ndim):
-         print (" ", g[j], S[j])"""
+         print (" ", g[j], S[j])
+    
+    """id : mp-1215248において、Minkowski reduction無限ループ"""
+    #import pandas as pd
+    #df = pd.read_csv ('../collected.csv')
+    #print (len (df))
+    #df = df.set_index ('id')
+    id_ = 'mp-1214993' # mp-1214993
+    #formula, cs, a,b,c,alpha,beta,gamma,symbol = df.loc[id_,
+    #    ['formula','crystal_system','a','b','c',
+    #    'alpha','beta','gamma','symbol']].values
+
+    a,b,c,alpha,beta,gamma = 11.388268, 10.611226, 9.305978786052007, 90.0, 127.22045894241296, 90.0
+    formula = 'Ag3P3HO9'; symbol = 'C2/m'
+    print ('formula : {}, id : {}, a {}, b {}, c {}, alpha {}, beta {}, gamma {}, symbol {}'.format(
+                formula, id_, a,b,c,alpha,beta,gamma,symbol))
+    alpha, beta, gamma = np.deg2rad (alpha), np.deg2rad (beta), np.deg2rad (gamma)
+    S = np.array ([
+                [a ** 2, a * b * np.cos (gamma), a * c * np.cos (beta)],
+                [a * b * np.cos (gamma), b ** 2, b * c * np.cos (alpha)],
+                [a * c * np.cos (beta), b * c * np.cos (alpha), c ** 2]])
+    hC = np.array ([[1/2,1/2,0],[1/2,-1/2,0],[0,0,1]])
+    print (S)
+    S_input = hC.dot (S).dot (hC.T)
+
+    print (S_input)
+
+    g, S = Minkowski_reduction (S_input)
+    print ("* g, Buerger reduced S = g*S*g^T")
+    for j in range(ndim):
+         print (" ", g[j], S[j])

@@ -120,7 +120,7 @@ inline bool Selling_reduction_3D (const NRMat<Double>& S_input, NRMat<Int4>& g, 
              such that g S g^T is Selling reduced (i.e., all non-diagonal entries are <= 0).*/
 {
     Int4 ISIZE = 4;
-    assert ((S_input.nrows() == ISIZE) & 
+    assert ((S_input.nrows() == ISIZE) &&
             (S_input.ncols() == ISIZE));
     S = S_input;
     g = identity_matrix<Int4> (ISIZE); // set g = I

@@ -112,7 +112,7 @@ def Buerger_reduction (S_input):
             2*abs(S[1,2]) <= S[1,1]*EPS and
             ( (S[0,1] > 0 and S[0,2] > 0 and S[1,2] > 0) or
               (S[0,1]<= 0 and S[0,2]<= 0 and S[1,2]<= 0) ) ), "Reduced S:\n" + str(S)
-    assert -2*(S[0,1] + S[0,2] + S[1,2]) <= (S[0,0] + S[1,1])*EPS, "Reduced S:\n" + str(S)
+    assert 2*(S[0,1] + S[0,2] + S[1,2]) + S[0,0] + S[1,1] >= 0, "Reduced S:\n" + str(S)
     assert dist(S, g.dot (S_input).dot (g.T)) <= dist(S_input, np.zeros((ndim,ndim)))*1.0e-10, "Reduced S:\n" + str(S)
     return g, S
     
