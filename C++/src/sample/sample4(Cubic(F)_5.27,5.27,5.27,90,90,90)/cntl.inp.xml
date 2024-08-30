@@ -1,9 +1,0 @@
-<ZCodeParameters>
-  <BLDConographInputFile>
-    <!-- Input parameters.-->
-    <ControlParamFile> CeO2_matsushita.inp.xml </ControlParamFile>
-
-    <!-- Output file -->
-    <OutputFile> output/CeO2_matsushita.out.xml </OutputFile>
-  </BLDConographInputFile>
-</ZCodeParameters>
